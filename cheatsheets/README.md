@@ -7,9 +7,9 @@ Dirtywave manual). Built for [m8c](https://github.com/laamaa/m8c) on retro handh
 
 ## Generator (recommended)
 
-**[`generator/`](generator/)** is a no-backend web app: pick which button each M8 function
-sits on, watch a live preview, then Print / Save PDF. It's the easiest way to get a sheet
-that matches your device.
+**▶ [Open the generator](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/generator/)** -
+pick which button each M8 function sits on, watch a live preview, then Print / Save PDF. It's
+the easiest way to get a sheet that matches your device.
 
 Options:
 - **Button mapping** - put EDIT / OPTION / SHIFT / PLAY / QUIT on any button
@@ -19,19 +19,14 @@ Options:
 - **Paper size** - US Letter or A4
 - Your setup is saved in the URL + `localStorage`, so a shared link reopens it
 
-Run it locally (`cd cheatsheets && python -m http.server 8080`, then open `/generator/`),
-or use the hosted copy if this repo publishes GitHub Pages. See
-[`generator/README.md`](generator/README.md) for details and deployment.
+## Pre-made cards (stock mapping)
 
-## Pre-made cards (default mapping)
+Ready-to-print copies using the stock m8c mapping (SHIFT=SELECT, PLAY=START, EDIT=A,
+OPTION=B, quit=SELECT+L1):
 
-These are static, ready-to-print copies using the stock m8c mapping (SHIFT=SELECT,
-PLAY=START, EDIT=A, OPTION=B, quit=SELECT+L1):
-
-- **`shortcuts-controller.html`** - single-page landscape card (M8 firmware 6.5+)
-- **`controller.html`** - pocket fold booklet
-- **`efx.html`** - EFX & synthesis reference (effect codes, FM algorithms, synth params;
-  not controller-specific)
+- [Single-page card](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/shortcuts-controller.html) (M8 firmware 6.5+, landscape)
+- [Pocket fold booklet](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/controller.html)
+- [EFX & synthesis reference](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/efx.html) (effect codes, FM algorithms, synth params; not controller-specific)
 
 ## Printing
 
@@ -41,7 +36,7 @@ PLAY=START, EDIT=A, OPTION=B, quit=SELECT+L1):
 - Paper: US Letter or A4 (the generator has a selector; the static cards are Letter-first
   but fit A4).
 
-## Credits & licensing
+## Credits
 
 These cheat sheets are derivatives of two projects, with thanks to both authors:
 - **[LaurentVitalis/M8Guide](https://github.com/LaurentVitalis/M8Guide)** - the original

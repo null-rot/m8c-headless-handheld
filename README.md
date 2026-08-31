@@ -32,25 +32,28 @@ The build is based on **[jamesMcMeex/m8c-rg35xx-knulli](https://github.com/james
 
 ## 🎛️ Cheat sheets
 
-Printable M8 keyboard-shortcut references, adapted so the button icons show **your handheld's
-buttons** (A / B / SELECT / START / L1 …) while the wording keeps the M8's own names - so they
-still match the Dirtywave manual. Everything is in [`cheatsheets/`](cheatsheets).
+Printable M8 shortcut references, adapted so the button icons show **your handheld's buttons**
+while the wording keeps the M8's own names (so they still match the Dirtywave manual).
 
-- **[Generator](cheatsheets/generator/)** - a no-backend web app: pick which button each M8
-  function sits on, live-preview, and Print / Save PDF. Deployable to GitHub Pages.
-- **Single-page card** - `cheatsheets/shortcuts-controller.html` (firmware 6.5+, landscape).
-- **Pocket fold booklet** - `cheatsheets/controller.html`.
-- **EFX & synthesis reference** - `cheatsheets/efx.html`.
+### ▶ [Open the cheat-sheet generator](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/generator/)
 
-See [`cheatsheets/README.md`](cheatsheets/README.md) for details and
-print settings.
+Pick which button each M8 function sits on, watch a live preview, then Print / Save PDF.
+Choose single-page or fold booklet, US Letter or A4, and your device's button legend.
 
-**Credits** - the cheat sheets are derivatives of two excellent projects:
-[**LaurentVitalis/M8Guide**](https://github.com/LaurentVitalis/M8Guide) (original design & SVG
-button template) and [**cengebretson/M8Guide**](https://github.com/cengebretson/M8Guide)
-(single-page layout & the firmware 6.5+ shortcut set / EFX reference). The M8 tracker is a
-product of [**Dirtywave**](https://dirtywave.com/); `m8c` is by
-[**laamaa**](https://github.com/laamaa/m8c).
+Or print a ready-made copy (stock mapping):
+- [Single-page card](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/shortcuts-controller.html) (firmware 6.5+, landscape)
+- [Pocket fold booklet](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/controller.html)
+- [EFX & synthesis reference](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/efx.html)
+
+### The original M8 guides these are based on
+
+These are controller-adapted derivatives of two great guides for the standard M8 - go grab the
+originals (and give them a star):
+- **[LaurentVitalis/M8Guide](https://github.com/LaurentVitalis/M8Guide)** - the fold booklet and the SVG button-pad design.
+- **[cengebretson/M8Guide](https://github.com/cengebretson/M8Guide)** - the single-page layout and the firmware 6.5+ shortcut set / EFX reference.
+
+The M8 tracker is a product of [Dirtywave](https://dirtywave.com/); `m8c` is by
+[laamaa](https://github.com/laamaa/m8c).
 
 
 ## 📚 Docs
