@@ -1,6 +1,6 @@
 #!/bin/bash
-# m8c launcher for muOS (self-contained: keep this script and the .m8c folder together
-# in ROMS/Ports/). Controls are set in .m8c/.local/share/m8c/config.ini.
+# m8c launcher for muOS (self-contained: keep this script and the m8c folder together
+# in ROMS/Ports/). Controls are set in m8c/.local/share/m8c/config.ini.
 
 XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 
@@ -19,7 +19,7 @@ source $controlfolder/control.txt
 
 get_controls
 
-GAMEDIR="$(realpath "$(dirname "$0")")/.m8c"
+GAMEDIR="$(realpath "$(dirname "$0")")/m8c"
 CUR_TTY="/dev/tty0"
 
 # Keep m8c's config/data inside the port folder so config.ini is read + persists here

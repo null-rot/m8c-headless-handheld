@@ -5,7 +5,7 @@ set -e
 cd /build
 
 # Create output directories (in case they weren't created by Docker)
-mkdir -p /build/compiled/knulli/m8c /build/compiled/muos/.m8c/.local/share/m8c
+mkdir -p /build/compiled/knulli/m8c /build/compiled/muos/m8c/.local/share/m8c
 
 # Build m8c
 echo "Building m8c..."
@@ -42,7 +42,7 @@ for module in cdc-acm.ko snd-hwdep.ko snd-usbmidi-lib.ko snd-usb-audio.ko; do
   MODULE_PATH=$(find /build/linux-$LINUX_KERNEL_VERSION -name "$module" | head -n1)
   if [ -n "$MODULE_PATH" ]; then
     cp -v "$MODULE_PATH" /build/compiled/knulli/m8c/
-    cp -v "$MODULE_PATH" /build/compiled/muos/.m8c/
+    cp -v "$MODULE_PATH" /build/compiled/muos/m8c/
   else
     echo "Warning: $module not found"
   fi
@@ -51,7 +51,7 @@ done
 # Copy m8c executable into both packages
 if [ -f "/build/m8c/m8c" ]; then
   cp -v /build/m8c/m8c /build/compiled/knulli/m8c/
-  cp -v /build/m8c/m8c /build/compiled/muos/.m8c/
+  cp -v /build/m8c/m8c /build/compiled/muos/m8c/
   echo "Copied m8c executable"
 else
   echo "Error: m8c executable not found"
@@ -84,7 +84,7 @@ chmod +x /build/compiled/knulli/m8c.sh
 # --- muOS package: launcher + config.ini come from the validated template
 # (examples/muos-m8c-1.7.10 in the repo) - only the binary/modules above are fresh. ---
 cp /build/templates/muos/m8c.sh /build/compiled/muos/m8c.sh
-cp /build/templates/muos/.m8c/.local/share/m8c/config.ini /build/compiled/muos/.m8c/.local/share/m8c/config.ini
+cp /build/templates/muos/m8c/.local/share/m8c/config.ini /build/compiled/muos/m8c/.local/share/m8c/config.ini
 chmod +x /build/compiled/muos/m8c.sh
 
 #
@@ -124,8 +124,8 @@ check_build_output() {
     fi
 
     echo "--- muOS package (/build/compiled/muos) ---"
-    if [ -f "/build/compiled/muos/.m8c/m8c" ]; then
-        file_type=$(file /build/compiled/muos/.m8c/m8c)
+    if [ -f "/build/compiled/muos/m8c/m8c" ]; then
+        file_type=$(file /build/compiled/muos/m8c/m8c)
         if [[ $file_type == *"ARM aarch64"* && $file_type == *"LSB"* && $file_type == *"executable"* ]]; then
             echo "OK   m8c executable present and valid"
         else
@@ -137,14 +137,14 @@ check_build_output() {
         ((error_count++))
     fi
     for module in "${modules[@]}"; do
-        if [ -f "/build/compiled/muos/.m8c/$module" ]; then
+        if [ -f "/build/compiled/muos/m8c/$module" ]; then
             echo "OK   kernel module $module present"
         else
             echo "WARN kernel module $module missing"
             ((warning_count++))
         fi
     done
-    if [ -f "/build/compiled/muos/m8c.sh" ] && [ -f "/build/compiled/muos/.m8c/.local/share/m8c/config.ini" ]; then
+    if [ -f "/build/compiled/muos/m8c.sh" ] && [ -f "/build/compiled/muos/m8c/.local/share/m8c/config.ini" ]; then
         echo "OK   muos m8c.sh + config.ini present"
     else
         echo "FAIL muos m8c.sh or config.ini missing"
@@ -173,4 +173,4 @@ check_build_output
 
 echo "Build and check process complete."
 echo "  Knulli package: /build/compiled/knulli/  (m8c.sh + m8c/ -> roms/ports)"
-echo "  muOS package:   /build/compiled/muos/    (m8c.sh + .m8c/ -> ROMS/Ports)"
+echo "  muOS package:   /build/compiled/muos/    (m8c.sh + m8c/ -> ROMS/Ports)"

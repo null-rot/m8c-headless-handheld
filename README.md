@@ -25,7 +25,7 @@ The original build instructions are preserved in
 [`docs/legacy-docker-build.md`](docs/legacy-docker-build.md).
 
 A ready-to-use **MuOS port** (the working reference package) is in
-[`examples/muos-m8c-1.7.10/`](examples/muos-m8c-1.7.10) - drop `m8c.sh` + the hidden `.m8c`
+[`examples/muos-m8c-1.7.10/`](examples/muos-m8c-1.7.10) - drop `m8c.sh` + the `m8c`
 payload into `ROMS/Ports/` on the device.
 
 The build is based on **[jamesMcMeex/m8c-rg35xx-knulli](https://github.com/jamesMcMeex/m8c-rg35xx-knulli)**.

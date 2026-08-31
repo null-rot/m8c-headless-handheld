@@ -80,7 +80,10 @@ build_image() {
 run_container() {
     echo "Running container..."
     mkdir -p output
-    docker run --platform $PLATFORM -v $(pwd)/output:/build/compiled $IMAGE_NAME
+    # MSYS_NO_PATHCONV avoids Git Bash on Windows mangling the -v host:container
+    # path (it tries to path-convert both sides of the colon-separated arg).
+    # No-op on Linux/macOS.
+    MSYS_NO_PATHCONV=1 docker run --platform $PLATFORM -v $(pwd)/output:/build/compiled $IMAGE_NAME
 }
 
 # Main execution
@@ -94,4 +97,4 @@ run_container
 echo ""
 echo "Done. Packages are in ./output/:"
 echo "  output/knulli/  - copy m8c.sh + m8c/ into roms/ports (Knulli)"
-echo "  output/muos/    - copy m8c.sh + .m8c/ into ROMS/Ports (muOS)"
+echo "  output/muos/    - copy m8c.sh + m8c/ into ROMS/Ports (muOS)"

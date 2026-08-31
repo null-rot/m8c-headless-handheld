@@ -56,7 +56,7 @@ ENV SDL_CONFIG=/usr/bin/sdl2-config
 COPY examples/muos-m8c-1.7.10 /build/templates/muos
 
 # Ensure the output directories exist
-RUN mkdir -p /build/compiled/knulli/m8c /build/compiled/muos/.m8c
+RUN mkdir -p /build/compiled/knulli/m8c /build/compiled/muos/m8c
 
 # Copy the ARM64-specific build script
 COPY build_script.arm64.sh /build/build_script.sh

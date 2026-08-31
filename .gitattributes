@@ -9,4 +9,4 @@
 *.jpeg binary
 *.ko  binary
 *.gz  binary
-examples/muos-m8c-1.7.10/.m8c/m8c binary
+examples/muos-m8c-1.7.10/m8c/m8c binary

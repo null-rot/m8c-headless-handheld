@@ -58,6 +58,6 @@ COPY build_script.x86_64.sh /build/build_script.sh
 RUN chmod +x /build/build_script.sh && dos2unix /build/build_script.sh
 
 # Ensure the output directories exist
-RUN mkdir -p /build/compiled/knulli/m8c /build/compiled/muos/.m8c
+RUN mkdir -p /build/compiled/knulli/m8c /build/compiled/muos/m8c
 
 CMD ["/bin/bash", "/build/build_script.sh"]

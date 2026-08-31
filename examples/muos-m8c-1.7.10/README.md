@@ -3,7 +3,7 @@
 A ready-to-run m8c port for muOS on Allwinner H700 handhelds (RG35XX* / RG40XX*).
 
 ## Install
-Copy **both** `m8c.sh` and the hidden **`.m8c`** folder into `ROMS/Ports/` on the card
+Copy **both** `m8c.sh` and the **`m8c`** folder into `ROMS/Ports/` on the card
 (keep them together), then do a Content Refresh (or reboot) and launch **m8c** from Ports.
 
 ## Controls
@@ -18,7 +18,7 @@ Copy **both** `m8c.sh` and the hidden **`.m8c`** folder into `ROMS/Ports/` on th
 
 L1, L2 and R2 are unused.
 
-Controls live in [`.m8c/.local/share/m8c/config.ini`](.m8c/.local/share/m8c/config.ini)
+Controls live in [`m8c/.local/share/m8c/config.ini`](m8c/.local/share/m8c/config.ini)
 (SDL button numbers -> M8 functions). To change them, edit that file; the launcher does
 **not** hardcode a controller mapping, so muOS's own mapping applies.
 
