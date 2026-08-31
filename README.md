@@ -42,7 +42,7 @@ still match the Dirtywave manual. Everything is in [`cheatsheets/`](cheatsheets)
 - **Pocket fold booklet** - `cheatsheets/controller.html`.
 - **EFX & synthesis reference** - `cheatsheets/efx.html`.
 
-See [`cheatsheets/README-controller.md`](cheatsheets/README-controller.md) for details and
+See [`cheatsheets/README.md`](cheatsheets/README.md) for details and
 print settings.
 
 **Credits** - the cheat sheets are derivatives of two excellent projects:

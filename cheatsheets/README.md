@@ -1,33 +1,58 @@
-# M8 Shortcuts Guide
+# M8 Controller Cheat Sheets
 
-<img src="guide.jpg" width="500">
+Printable Dirtywave M8 shortcut references, adapted so the button icons show **your
+handheld's buttons** while the wording keeps the M8's own names (so they still match the
+Dirtywave manual). Built for [m8c](https://github.com/laamaa/m8c) on retro handhelds
+(muOS / Anbernic etc.), but usable with any controller.
 
-A foldable 4-page mini guide containing shortcuts for the Dirtywave M8.
+## Generator (recommended)
 
-Printable on a letter paper sheet and can be stored in your M8 case once folded.
+**[`generator/`](generator/)** is a no-backend web app: pick which button each M8 function
+sits on, watch a live preview, then Print / Save PDF. It's the easiest way to get a sheet
+that matches your device.
 
-## Instructions
+Options:
+- **Button mapping** - put EDIT / OPTION / SHIFT / PLAY / QUIT on any button
+- **Button legend** - Nintendo / Anbernic, Xbox, or PlayStation face-button names
+- **Show on buttons** - device names, M8 function names, or both
+- **Format** - single-page (landscape) or pocket fold booklet (portrait)
+- **Paper size** - US Letter or A4
+- Your setup is saved in the URL + `localStorage`, so a shared link reopens it
 
-Print the PDF file, fold on the dotted lines, cut using the corner cut marks.
+Run it locally (`cd cheatsheets && python -m http.server 8080`, then open `/generator/`),
+or use the hosted copy if this repo publishes GitHub Pages. See
+[`generator/README.md`](generator/README.md) for details and deployment.
 
-You can glue the first fold for a cleaner look.
+## Pre-made cards (default mapping)
 
-Do not follow the paper edges when folding, your printer might not be super accurate, like mine.
+These are static, ready-to-print copies using the stock m8c mapping (SHIFT=SELECT,
+PLAY=START, EDIT=A, OPTION=B, quit=SELECT+L1):
 
-## To customize or update 
+- **`shortcuts-controller.html`** - single-page landscape card (M8 firmware 6.5+)
+- **`controller.html`** - pocket fold booklet
+- **`efx.html`** - EFX & synthesis reference (effect codes, FM algorithms, synth params;
+  not controller-specific)
 
-All shortcuts are entered in a JS array which is then rendered.
+## Printing
 
-### Button pad syntax
+- **Single-page / EFX:** Landscape, margins None/Minimum, Scale 100%, Background Graphics ON.
+- **Fold booklet:** Portrait, margins ~0.25in, Background Graphics ON. Fold on the dotted
+  lines, cut the corner marks.
+- Paper: US Letter or A4 (the generator has a selector; the static cards are Letter-first
+  but fit A4).
 
-There is no need to edit button pad icons, a single svg template is customized via css.
+## Credits & licensing
 
-#### Example
+These cheat sheets are derivatives of two projects, with thanks to both authors:
+- **[LaurentVitalis/M8Guide](https://github.com/LaurentVitalis/M8Guide)** - the original
+  design, the SVG button-pad template, and the fold-booklet format. Their original README is
+  preserved here as [`README.upstream.md`](README.upstream.md).
+- **[cengebretson/M8Guide](https://github.com/cengebretson/M8Guide)** - the single-page
+  layout and the firmware 6.5+ shortcut set / EFX reference.
 
-To illustrate the shortcut "hold SHIFT + OPTION then double-tap EDIT", enter :
+The M8 tracker is a product of **[Dirtywave](https://dirtywave.com/)**; `m8c` is by
+**[laamaa](https://github.com/laamaa/m8c)**.
 
-    shifthold option1st edit2nd double
-    
-### Create PDF
-
-In your browser, Print to PDF using custom margins (0.25" all around).
+> Both upstream M8Guide repos ship **without a license** (all rights reserved), and
+> cengebretson's is itself based on LaurentVitalis's. Please **credit both authors and seek
+> their permission** before distributing these publicly.

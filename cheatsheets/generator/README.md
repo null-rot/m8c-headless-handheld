@@ -43,6 +43,6 @@ Landscape, **US Letter**, margins **None/Minimum**, Scale **100%**, Background G
 ## Note on the vendored files
 This `cheatsheets` folder began as a clone of
 [LaurentVitalis/M8Guide](https://github.com/LaurentVitalis/M8Guide) and also vendors files from
-[cengebretson/M8Guide](https://github.com/cengebretson/M8Guide). See `../README-controller.md`
+[cengebretson/M8Guide](https://github.com/cengebretson/M8Guide). See `../README.md`
 for attribution - the upstream projects ship **without a license**, so credit the authors and
 seek permission before distributing widely.
