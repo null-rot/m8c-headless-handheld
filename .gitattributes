@@ -1,0 +1,12 @@
+# Normalize line endings for text; keep LF in the repo (good for GitHub Pages / Linux)
+* text=auto eol=lf
+
+# Binaries - never touch
+*.ttf binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ko  binary
+*.gz  binary
+examples/muos-m8c-1.7.10/.m8c/m8c binary

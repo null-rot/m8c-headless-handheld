@@ -1,0 +1,191 @@
+/* US Letter Landscape Optimization (11" x 8.5") */
+@page {
+  size: letter landscape;
+  margin: 2mm;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "SofiaSans", sans-serif;
+  padding: 2.5mm;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  font-size: 0.76rem;
+  line-height: 1;
+  overflow: hidden;
+  background-color: #fff;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.main-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.side-header {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: "SofiaSans";
+  font-weight: 900;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  padding-left: 1.2mm;
+  margin-left: 1.2mm;
+  padding-top: 2mm;
+  color: #000;
+  white-space: nowrap;
+}
+
+.side-header .fw-text {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-top: 3mm;
+  color: #666;
+}
+
+#content {
+  display: flex;
+  flex-direction: row;
+  gap: 4mm;
+  width: 100%;
+  height: 100%;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.section_container {
+  border: 1px solid #ddd;
+  border-radius: 0.8mm;
+  overflow: hidden;
+}
+
+.section_header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  padding: 0.8mm 1.5mm;
+}
+
+.cmd-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cmd-table tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cmd-table tr:last-child {
+  border-bottom: none;
+}
+
+.cmd-table td {
+  padding: 1.2px 3.5px;
+  vertical-align: middle;
+}
+
+.col-cmd {
+  font-weight: 800;
+  font-family: "SofiaSans", monospace;
+  width: 28px;
+  color: #000;
+  font-size: 1.09em;
+  padding-left: 6px !important;
+}
+
+.col-desc {
+  font-family: "SofiaSansCond";
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 1;
+  padding-left: 6px !important;
+}
+
+.col-eg {
+  font-family: "SofiaSans";
+  font-weight: 800;
+  color: #d32f2f;
+  font-size: 0.85em;
+  text-align: right;
+  white-space: nowrap;
+  padding-left: 3px !important;
+  padding-right: 10px !important;
+}
+
+.note {
+  display: block;
+  color: #666;
+  font-size: 0.95em;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Colors */
+.h-pink {
+  background-color: #ffd1dc;
+}
+.h-orange {
+  background-color: #ffe0b2;
+}
+.h-yellow {
+  background-color: #fff9c4;
+}
+.h-teal {
+  background-color: #b2dfdb;
+}
+.h-blue {
+  background-color: #bbdefb;
+}
+.h-gray {
+  background-color: #e0e0e0;
+}
+
+.header-icon {
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  fill: currentColor;
+}
+
+.badge {
+  background: #000;
+  color: #fff;
+  font-size: 0.6em;
+  padding: 0 1.5px;
+  border-radius: 1.5px;
+  margin-left: 2px;
+  font-weight: 800;
+}
+
+@media print {
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  .side-header {
+    font-size: 1.2rem;
+  }
+}

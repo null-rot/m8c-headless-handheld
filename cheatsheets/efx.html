@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dirtywave M8 Cheat Sheet (Firmware 6.5)</title>
+    <link href="fonts/sofiasans.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/efx.css">
+</head>
+<body>
+
+    <div class="main-layout">
+        <div id="content">
+
+            <!-- COLUMN 1 -->
+            <div class="column">
+                <div class="section_container">
+                    <div class="section_header h-pink">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+                        Common Instrument EFX
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">VOL</td><td class="col-desc">Volume <span class="note">00 (Silent) - FF (Max)</span></td><td class="col-eg">VOL 40</td></tr>
+                        <tr><td class="col-cmd">PIT</td><td class="col-desc">Pitch (Coarse) <span class="note">Hex Semitones</span></td><td class="col-eg">PIT 0C</td></tr>
+                        <tr><td class="col-cmd">FIN</td><td class="col-desc">Fine Tune <span class="note">Cents deviation</span></td><td class="col-eg">FIN 05</td></tr>
+                        <tr><td class="col-cmd">ERR</td><td class="col-desc">Error <span class="note">Stereo Detune / Noise</span></td><td class="col-eg">ERR 10</td></tr>
+                        <tr><td class="col-cmd">SMX</td><td class="col-desc">Mod Send <span class="note">ModFX amount</span></td><td class="col-eg">SMX 40</td></tr>
+                        <tr><td class="col-cmd">SDL</td><td class="col-desc">Delay Send <span class="note">Delay amount</span></td><td class="col-eg">SDL 40</td></tr>
+                        <tr><td class="col-cmd">SRV</td><td class="col-desc">Reverb Send <span class="note">Reverb amount</span></td><td class="col-eg">SRV 40</td></tr>
+                        <tr><td class="col-cmd">FIL</td><td class="col-desc">Filter Type <span class="note">Select Model</span></td><td class="col-eg">FIL 01</td></tr>
+                        <tr><td class="col-cmd">CUT</td><td class="col-desc">Cutoff <span class="note">Filter Frequency</span></td><td class="col-eg">CUT 80</td></tr>
+                        <tr><td class="col-cmd">RES</td><td class="col-desc">Resonance <span class="note">Filter Peak</span></td><td class="col-eg">RES 40</td></tr>
+                        <tr><td class="col-cmd">AMP</td><td class="col-desc">Amp Level <span class="note">Drive/Volume</span></td><td class="col-eg">AMP 80</td></tr>
+                        <tr><td class="col-cmd">LIM</td><td class="col-desc">Limiter <span class="note">Clip/Limit Mode</span></td><td class="col-eg">LIM 02</td></tr>
+                        <tr><td class="col-cmd">PAN</td><td class="col-desc">Panning <span class="note">00 (L) - 80 (C) - FF (R)</span></td><td class="col-eg">PAN 20</td></tr>
+                    </table>
+                </div>
+
+                <div class="section_container">
+                    <div class="section_header h-orange">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                        Sequence Flow
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">HOP</td><td class="col-desc">GOTO Row <span class="note">Phrase: XX=Row (0-F). Table: X=Count (0=∞), Y=Row</span></td><td class="col-eg">HOP 00</td></tr>
+                        <tr><td class="col-cmd">KIL</td><td class="col-desc">Kill Note <span class="note">XX: Ticks (00-FF) until hard cut</span></td><td class="col-eg">KIL 04</td></tr>
+                        <tr><td class="col-cmd">OFF</td><td class="col-desc">Note Off <span class="note">XX: Ticks (00-FF) until release begins</span></td><td class="col-eg">OFF 04</td></tr>
+                        <tr><td class="col-cmd">NXT</td><td class="col-desc">Next Track <span class="note">XX: Inst (00-7F) to trig on track to right</span></td><td class="col-eg">NXT 01</td></tr>
+                        <tr><td class="col-cmd">RET</td><td class="col-desc">Retrigger <span class="note">X: Vol Multi (0-7 Out, 8-F In), Y: Ticks</span></td><td class="col-eg">RET 82</td></tr>
+                        <tr><td class="col-cmd">REP</td><td class="col-desc">Repeat / Ramp <span class="note">X: Ticks (00: Stop), Y: Step Amt (8-F is neg)</span></td><td class="col-eg">REP 41</td></tr>
+                        <tr><td class="col-cmd">RTO</td><td class="col-desc">Repeat To <span class="note">XX: Target value (Stops the REP cmd)</span></td><td class="col-eg">RTO 80</td></tr>
+                        <tr><td class="col-cmd">CHA</td><td class="col-desc">Chance <span class="note">Phrase: X=L, Y=R (0-F). Table: XX (00-FF)</span></td><td class="col-eg">CHA 1F</td></tr>
+                        <tr><td class="col-cmd">NTH</td><td class="col-desc">Nth Trigger <span class="note">Phrase: X=L, Y=R. Table: XX=L. (0:Ev, 1:! 2:On 3:Af)</span></td><td class="col-eg">NTH 02</td></tr>
+                        <tr><td class="col-cmd">RMX</td><td class="col-desc">Remix Tracks <span class="note">X: Track Mask, Y: Playhead Row</span></td><td class="col-eg">RMX 04</td></tr>
+                        <tr><td class="col-cmd">INS</td><td class="col-desc">Instrument <span class="note">Change Inst (00-7F)</span></td><td class="col-eg">INS 02</td></tr>
+                        <tr><td class="col-cmd">RND</td><td class="col-desc">Rand Prev FX <span class="note">X/Y: L/R Digit Range (0-F)</span></td><td class="col-eg">RND 1F</td></tr>
+                        <tr><td class="col-cmd">RNL</td><td class="col-desc">Rand Left Cmd <span class="note">X/Y: L/R Digit Range (0-F)</span></td><td class="col-eg">RNL 44</td></tr>
+                        <tr><td class="col-cmd">MTT</td><td class="col-desc">Micro Timing <span class="badge">NEW</span><span class="note">Sub-tick note shift</span></td><td class="col-eg">MTT 10</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 -->
+            <div class="column">
+                <div class="section_container">
+                    <div class="section_header h-blue">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 9H9v6h6V9zm-2 4h-2v-2h2v2zm8-2V9h-2V7c0-1.1-.9-2-2-2h-2V3h-2v2h-2V3H9v2H7c-1.1 0-2 .9-2 2v2H3v2h2v2H3v2h2v2c0 1.1.9 2 2 2h2v2h2v-2h2v2h2v-2h2c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2zm-4 6H7V7h10v10z"/></svg>
+                        Macrosynth
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">OSC</td><td class="col-desc">Shape <span class="note">Synth model selection</span></td><td class="col-eg">OSC 02</td></tr>
+                        <tr><td class="col-cmd">TBR</td><td class="col-desc">Timbre <span class="note">Macro Param 1</span></td><td class="col-eg">TBR 80</td></tr>
+                        <tr><td class="col-cmd">COL</td><td class="col-desc">Color <span class="note">Macro Param 2</span></td><td class="col-eg">COL 40</td></tr>
+                        <tr><td class="col-cmd">DEG</td><td class="col-desc">Degrade <span class="note">Sample Rate Redux</span></td><td class="col-eg">DEG 20</td></tr>
+                        <tr><td class="col-cmd">RED</td><td class="col-desc">Redux <span class="note">Bit Depth Redux</span></td><td class="col-eg">RED 10</td></tr>
+                        <tr><td class="col-cmd">TRG</td><td class="col-desc">Trigger <span class="note">Pluck/Strike Exciter</span></td><td class="col-eg">TRG 80</td></tr>
+                    </table>
+                </div>
+
+                <div class="section_container">
+                    <div class="section_header h-blue">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 2v4.07C7.38 6.57 4 9.9 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8c0-4.1-3.38-7.43-7-7.93V2h-2zm1 17.5c-3.03 0-5.5-2.47-5.5-5.5s2.47-5.5 5.5-5.5 5.5 2.47 5.5 5.5-2.47 5.5-5.5 5.5z"/></svg>
+                        FM Synth
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">ALG</td><td class="col-desc">Algorithm <span class="note">Op routing structure</span></td><td class="col-eg">ALG 04</td></tr>
+                        <tr><td class="col-cmd">FM*</td><td class="col-desc">Mod 1-4 <span class="note">Op A-D Modulation</span></td><td class="col-eg">FM1 80</td></tr>
+                        <tr><td class="col-cmd">SNC</td><td class="col-desc">Sync <span class="note">Oscillator Sync</span></td><td class="col-eg">SNC 01</td></tr>
+                    </table>
+                </div>
+
+                <div class="section_container">
+                    <div class="section_header h-blue">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/></svg>
+                        Wavsynth
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">OSC</td><td class="col-desc">Shape <span class="note">Wave Shape Select</span></td><td class="col-eg">OSC 02</td></tr>
+                        <tr><td class="col-cmd">SIZ</td><td class="col-desc">Size <span class="note">Pulse Width / Size</span></td><td class="col-eg">SIZ 80</td></tr>
+                        <tr><td class="col-cmd">MUL</td><td class="col-desc">Mult <span class="note">Wave Multiplier</span></td><td class="col-eg">MUL 02</td></tr>
+                        <tr><td class="col-cmd">WRP</td><td class="col-desc">Warp <span class="note">Wave Skew / Bias</span></td><td class="col-eg">WRP 20</td></tr>
+                        <tr><td class="col-cmd">SNC</td><td class="col-desc">Sync <span class="note">Phase Reset</span></td><td class="col-eg">SNC 01</td></tr>
+                    </table>
+                </div>
+
+                <div class="section_container">
+                    <div class="section_header h-blue">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 3 10.62 3 14c0 4.97 4.03 9 9 9s9-4.03 9-9c0-6.27-4.5-11.41-7.5-13.33z"/></svg>
+                        Hypersynth
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">CRD</td><td class="col-desc">Chord <span class="note">Chord Bank</span></td><td class="col-eg">CRD 01</td></tr>
+                        <tr><td class="col-cmd">CVO</td><td class="col-desc">Voicing <span class="note">Chord Variation</span></td><td class="col-eg">CVO 20</td></tr>
+                        <tr><td class="col-cmd">SWN</td><td class="col-desc">Swarm <span class="note">Oscillator Detune</span></td><td class="col-eg">SWN 40</td></tr>
+                        <tr><td class="col-cmd">WID</td><td class="col-desc">Width <span class="note">Stereo Width</span></td><td class="col-eg">WID FF</td></tr>
+                        <tr><td class="col-cmd">SUB</td><td class="col-desc">Sub Osc <span class="note">Sub Mix Level</span></td><td class="col-eg">SUB 80</td></tr>
+                        <tr><td class="col-cmd">SNC</td><td class="col-desc">Sync <span class="note">Phase Reset</span></td><td class="col-eg">SNC 01</td></tr>
+                    </table>
+                </div>
+
+                <div class="section_container">
+                    <div class="section_header h-blue">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 18h2V6H7v12zm4 4h2V2h-2v20zm-8-8h2v-4H3v4zm12 4h2V6h-2v12zm4-8v4h2v-4h-2z"/></svg>
+                        Sampler
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">PLY</td><td class="col-desc">Play Mode <span class="note">Fwd, Rev, Loop</span></td><td class="col-eg">PLY 01</td></tr>
+                        <tr><td class="col-cmd">STA</td><td class="col-desc">Start Pos <span class="note">Sample Start</span></td><td class="col-eg">STA 40</td></tr>
+                        <tr><td class="col-cmd">LOP</td><td class="col-desc">Loop Start <span class="note">Loop Point</span></td><td class="col-eg">LOP 10</td></tr>
+                        <tr><td class="col-cmd">LEN</td><td class="col-desc">Length <span class="note">Play Length</span></td><td class="col-eg">LEN 80</td></tr>
+                        <tr><td class="col-cmd">DEG</td><td class="col-desc">Degrade <span class="note">Bit-crush / Redux</span></td><td class="col-eg">DEG 80</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- COLUMN 3 -->
+            <div class="column">
+                <div class="section_container">
+                    <div class="section_header h-yellow">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                        Notes & Scales
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">ARP</td><td class="col-desc">Arpeggio <span class="note">3-note Arp XY = Intervals</span></td><td class="col-eg">ARP 37</td></tr>
+                        <tr><td class="col-cmd">ARC</td><td class="col-desc">Arp Config <span class="note">X=Mode, Y=Speed (Ticks)</span></td><td class="col-eg">ARC 04</td></tr>
+                        <tr><td class="col-cmd">SCA</td><td class="col-desc">Track Scale <span class="note">X=Key, Y=Scale Number</span></td><td class="col-eg">SCA 02</td></tr>
+                        <tr><td class="col-cmd">SCG</td><td class="col-desc">Global Scale <span class="note">X=Key, Y=Scale Number</span></td><td class="col-eg">SCG 01</td></tr>
+                        <tr><td class="col-cmd">DEL</td><td class="col-desc">Row Delay <span class="note">Delay row by XX ticks</span></td><td class="col-eg">DEL 03</td></tr>
+                        <tr><td class="col-cmd">PSL</td><td class="col-desc">Pitch Slide <span class="note">Time to slide</span></td><td class="col-eg">PSL 10</td></tr>
+                        <tr><td class="col-cmd">PBN</td><td class="col-desc">Pitch Bend <span class="note">Bend range (Hz)</span></td><td class="col-eg">PBN 80</td></tr>
+                        <tr><td class="col-cmd">PVB/X</td><td class="col-desc">Vibrato <span class="note">Standard / Extreme</span></td><td class="col-eg">PVB 10</td></tr>
+                    </table>
+                </div>
+
+                <div class="section_container">
+                    <div class="section_header h-gray">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                        Global
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">TPO</td><td class="col-desc">Tempo <span class="note">Change BPM (Hex)</span></td><td class="col-eg">TPO 80</td></tr>
+                        <tr><td class="col-cmd">TSP</td><td class="col-desc">Global Transp <span class="note">Entire song offset</span></td><td class="col-eg">TSP 0C</td></tr>
+                        <tr><td class="col-cmd">GRV</td><td class="col-desc">Groove <span class="note">Track Groove Select</span></td><td class="col-eg">GRV 01</td></tr>
+                        <tr><td class="col-cmd">GGR</td><td class="col-desc">Global Groove <span class="note">Groove for all tracks</span></td><td class="col-eg">GGR 01</td></tr>
+                        <tr><td class="col-cmd">SED</td><td class="col-desc">Seed <span class="note">Lock generative randomness</span></td><td class="col-eg">SED 01</td></tr>
+                        <tr><td class="col-cmd">DJ*</td><td class="col-desc">DJ Filter <span class="note">Cut(C)/Res(R)/Typ(T)</span></td><td class="col-eg">DJC 80</td></tr>
+                    </table>
+                </div>
+
+                <div class="section_container">
+                    <div class="section_header h-teal">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                        Table Commands
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">TIC</td><td class="col-desc">Table Tick <span class="note">Set table tick rate (XX)</span></td><td class="col-eg">TIC 02</td></tr>
+                        <tr><td class="col-cmd">TBL</td><td class="col-desc">Table Select <span class="note">Set Table number (XX)</span></td><td class="col-eg">TBL 01</td></tr>
+                        <tr><td class="col-cmd">THO</td><td class="col-desc">Table Hop <span class="note">Loop logic inside Table</span></td><td class="col-eg">THO 00</td></tr>
+                        <tr><td class="col-cmd">TBX</td><td class="col-desc">Aux Table <span class="note">Assign parallel Table</span></td><td class="col-eg">TBX 02</td></tr>
+                    </table>
+                </div>
+
+                <div class="section_container">
+                    <div class="section_header h-teal">
+                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L11 12.41V7h2v4.59l3.71 3.71-1.42 1.41z"/></svg>
+                        TIC Modes (Table Tick)
+                    </div>
+                    <table class="cmd-table">
+                        <tr><td class="col-cmd">00</td><td class="col-desc">Inc. row on instrument trigger</td></tr>
+                        <tr><td class="col-cmd"><nobr>01-FB</no-br></td><td class="col-desc">Number of ticks per row (XX)</td></tr>
+                        <tr><td class="col-cmd">FC</td><td class="col-desc">Octave Map <span class="note">Octave to row</span></td></tr>
+                        <tr><td class="col-cmd">FD</td><td class="col-desc">Velocity Map <span class="note">Vel to row</span></td></tr>
+                        <tr><td class="col-cmd">FE</td><td class="col-desc">Note Map <span class="note">Note to row (HOP 0C)</span></td></tr>
+                        <tr><td class="col-cmd">FF</td><td class="col-desc">Inc. row at 200 Hz</td></tr>
+                    </table>
+                    <div style="padding: 4px 6px; font-size: 0.90em; line-height: 1.2; border-top: 1px solid #ddd; background: #fcfcfc; font-family: 'SofiaSansCond';">
+                        <span style="color: #000; font-weight: 800;">New Note + Inst No:</span> Table resets to step 0 and starts playing.<br>
+                        <span style="color: #000; font-weight: 800;">New Note + No Inst No:</span> Note pitch changes; Table continues playing.<br>
+                        <span style="color: #000; font-weight: 800;">TIC 00 + New Note:</span> Table advances exactly one row.<br>
+                        <span style="color: #000; font-weight: 800;">OFF / KIL command:</span> Table stops running for that voice.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="side-header">
+        DIRTYWAVE M8 <span class="fw-text">Firmware 6.5</span>
+    </div>
+
+</body>
+</html>

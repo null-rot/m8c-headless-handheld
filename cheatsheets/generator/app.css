@@ -1,0 +1,39 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #1a1a1a; background: #fff; }
+header { padding: 14px 20px; border-bottom: 1px solid #e5e5e5; }
+header h1 { font-size: 18px; margin: 0; }
+header p { margin: 5px 0 0; font-size: 13px; color: #666; max-width: 70ch; }
+header a { color: #2563eb; }
+
+.app { display: flex; gap: 20px; padding: 18px 20px; align-items: flex-start; }
+.app-controls { width: 320px; flex-shrink: 0; }
+.preview { flex: 1; min-width: 0; }
+
+fieldset { border: 1px solid #e5e5e5; border-radius: 8px; padding: 12px 14px; margin: 0 0 14px; }
+legend { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #555; padding: 0 6px; }
+
+.field { margin-bottom: 10px; }
+.field:last-child { margin-bottom: 0; }
+.field label { display: block; font-size: 12px; font-weight: 600; color: #333; margin-bottom: 3px; }
+.field .hint { font-weight: 400; color: #999; }
+select, input[type="text"] { width: 100%; padding: 7px 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+
+.actions { display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+button { padding: 9px 14px; font-size: 14px; border-radius: 6px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+button:hover { background: #f5f5f5; }
+button.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+button.primary:hover { background: #1d4ed8; }
+
+.warn { color: #b45309; font-size: 12.5px; margin-top: 10px; min-height: 1.2em; }
+.toast { color: #15803d; font-size: 12.5px; margin-top: 6px; min-height: 1.2em; }
+
+.preview-hint { font-size: 12px; color: #888; margin: 0 0 8px; }
+.preview-scale { transform-origin: top left; }
+.sheet { box-shadow: 0 1px 10px rgba(0,0,0,.16); }
+
+@media print {
+  header, .app-controls, .preview-hint { display: none !important; }
+  .app { display: block; padding: 0; gap: 0; }
+  .preview { all: unset; }
+  .preview-scale { transform: none !important; }
+}

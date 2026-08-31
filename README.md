@@ -1,0 +1,73 @@
+# m8c-headless-handheld
+
+Everything for running the [DirtyWave M8](https://dirtywave.com/) **headless** client
+([m8c](https://github.com/laamaa/m8c)) on Linux retro handhelds - builds, printable
+**controller cheat sheets**, and setup docs. Aimed at Allwinner **H700** devices
+(RG35XX* / RG40XX*) running **muOS** or **Knulli**, but much of it is device-agnostic.
+
+## Contents
+
+| Area | What's here |
+|------|-------------|
+| [🔨 Build](#-build) | Compile `m8c` + the kernel modules for the handheld |
+| [🎛️ Cheat sheets](#️-cheat-sheets) | Personalized, printable M8 shortcut cards (+ a web generator) |
+| [📚 Docs](#-docs) | Setup & troubleshooting guides |
+
+---
+
+## 🔨 Build
+
+> ⚠️ **Work in progress - being reworked.**
+
+The current Docker-based build (Linux kernel modules + `m8c` for the Allwinner H700) lives at
+the repo root: `build.sh`, `Dockerfile.arm64`, `Dockerfile.x86_64`, `build_script.*.sh`.
+The original build instructions are preserved in
+[`docs/legacy-docker-build.md`](docs/legacy-docker-build.md).
+
+A ready-to-use **MuOS port** (the working reference package) is in
+[`examples/muos-m8c-1.7.10/`](examples/muos-m8c-1.7.10) - drop `m8c.sh` + the hidden `.m8c`
+payload into `ROMS/Ports/` on the device.
+
+The build is based on **[jamesMcMeex/m8c-rg35xx-knulli](https://github.com/jamesMcMeex/m8c-rg35xx-knulli)**.
+
+## 🎛️ Cheat sheets
+
+Printable M8 keyboard-shortcut references, adapted so the button icons show **your handheld's
+buttons** (A / B / SELECT / START / L1 …) while the wording keeps the M8's own names - so they
+still match the Dirtywave manual. Everything is in [`cheatsheets/`](cheatsheets).
+
+- **[Generator](cheatsheets/generator/)** - a no-backend web app: pick which button each M8
+  function sits on, live-preview, and Print / Save PDF. Deployable to GitHub Pages.
+- **Single-page card** - `cheatsheets/shortcuts-controller.html` (firmware 6.5+, landscape).
+- **Pocket fold booklet** - `cheatsheets/controller.html`.
+- **EFX & synthesis reference** - `cheatsheets/efx.html`.
+
+See [`cheatsheets/README-controller.md`](cheatsheets/README-controller.md) for details and
+print settings.
+
+**Credits** - the cheat sheets are derivatives of two excellent projects:
+[**LaurentVitalis/M8Guide**](https://github.com/LaurentVitalis/M8Guide) (original design & SVG
+button template) and [**cengebretson/M8Guide**](https://github.com/cengebretson/M8Guide)
+(single-page layout & the firmware 6.5+ shortcut set / EFX reference). The M8 tracker is a
+product of [**Dirtywave**](https://dirtywave.com/); `m8c` is by
+[**laamaa**](https://github.com/laamaa/m8c).
+
+> ℹ️ Both upstream M8Guide repos ship **without a license** (all rights reserved), and
+> cengebretson's is itself based on LaurentVitalis's. Please **credit both authors and seek
+> their permission** before distributing these cheat sheets publicly.
+
+## 📚 Docs
+
+> 🚧 **Placeholder - coming soon.**
+
+Setup and troubleshooting guides (installing on muOS, controls, audio, etc.) will live in
+[`docs/`](docs). For now it holds the legacy build notes.
+
+---
+
+## Acknowledgments
+- [Dirtywave](https://dirtywave.com/) - the M8 tracker.
+- [laamaa](https://github.com/laamaa/m8c) - the `m8c` headless client.
+- [jamesMcMeex](https://github.com/jamesMcMeex/m8c-rg35xx-knulli) - the H700 build this started from.
+- [LaurentVitalis](https://github.com/LaurentVitalis/M8Guide) & [cengebretson](https://github.com/cengebretson/M8Guide) - the M8 shortcut guides.
+- The Knulli & muOS communities.

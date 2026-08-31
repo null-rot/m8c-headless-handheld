@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M8 Controller Cheat Sheet Generator</title>
+  <link href="../fonts/sofiasans.css" rel="stylesheet">
+  <link rel="stylesheet" href="pad.css">
+  <link rel="stylesheet" href="sheet.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="pad.js"></script>
+  <script src="data.js"></script>
+  <script src="render.js"></script>
+</head>
+<body>
+  <header>
+    <h1>M8 Controller Cheat Sheet Generator</h1>
+    <p>Pick which button on your handheld each M8 function sits on, then <b>Print / Save PDF</b>.
+       The icons show <i>your</i> buttons; the wording keeps the M8's own names (firmware 6.5+).
+       Shortcut set &amp; layout based on
+       <a href="https://github.com/cengebretson/M8Guide" target="_blank" rel="noopener">cengebretson/M8Guide</a>
+       &amp; <a href="https://github.com/LaurentVitalis/M8Guide" target="_blank" rel="noopener">LaurentVitalis/M8Guide</a>.</p>
+  </header>
+
+  <div class="app">
+    <div class="app-controls">
+      <fieldset>
+        <legend>Your button mapping</legend>
+        <div class="field">
+          <label>EDIT <span class="hint">(m8c: A)</span></label>
+          <select id="sel-edit" data-fn="edit"></select>
+        </div>
+        <div class="field">
+          <label>OPTION <span class="hint">(m8c: B)</span></label>
+          <select id="sel-option" data-fn="option"></select>
+        </div>
+        <div class="field">
+          <label>SHIFT <span class="hint">(m8c: SELECT)</span></label>
+          <select id="sel-shift" data-fn="shift"></select>
+        </div>
+        <div class="field">
+          <label>PLAY <span class="hint">(m8c: START)</span></label>
+          <select id="sel-play" data-fn="play"></select>
+        </div>
+        <div class="field">
+          <label>QUIT button <span class="hint">(held with SHIFT to exit)</span></label>
+          <select id="sel-quit" data-fn="quit"></select>
+        </div>
+        <div class="warn" id="warn"></div>
+      </fieldset>
+
+      <div class="actions">
+        <button class="primary" id="btn-print">Print / Save PDF</button>
+        <button id="btn-share">Copy shareable link</button>
+        <button id="btn-reset">Reset to m8c defaults</button>
+      </div>
+      <div class="toast" id="toast"></div>
+    </div>
+
+    <div class="preview">
+      <p class="preview-hint">Live preview - this is exactly what prints (US Letter, landscape).</p>
+      <div class="preview-scale" id="preview-scale">
+        <div class="sheet" id="sheet"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1" };
+    var FUNCTIONS = ["edit", "option", "shift", "play", "quit"];
+    var config = Object.assign({}, DEFAULTS);
+
+    // options for the selects = every physical control (not the d-pad)
+    function controlOptions() {
+      return PAD_CONTROLS.filter(function (c) { return !c.dpad; })
+        .map(function (c) { return { id: c.id, label: (c.label ? c.label.t : c.id.toUpperCase()) }; });
+    }
+
+    function populateSelects() {
+      var opts = controlOptions();
+      FUNCTIONS.forEach(function (fn) {
+        var sel = document.getElementById("sel-" + fn);
+        sel.innerHTML = "";
+        opts.forEach(function (o) {
+          var el = document.createElement("option");
+          el.value = o.id; el.textContent = o.label;
+          sel.appendChild(el);
+        });
+      });
+    }
+
+    function readFromParamsOrStorage() {
+      var q = new URLSearchParams(location.search);
+      var cfg = Object.assign({}, DEFAULTS);
+      var any = false;
+      FUNCTIONS.forEach(function (fn) {
+        if (q.get(fn)) { cfg[fn] = q.get(fn); any = true; }
+      });
+      if (!any) {
+        try {
+          var s = localStorage.getItem("m8cheat-config");
+          if (s) cfg = Object.assign(cfg, JSON.parse(s));
+        } catch (e) {}
+      }
+      return cfg;
+    }
+
+    function syncFormFromConfig() {
+      FUNCTIONS.forEach(function (fn) { document.getElementById("sel-" + fn).value = config[fn]; });
+    }
+
+    function persist() {
+      try { localStorage.setItem("m8cheat-config", JSON.stringify(config)); } catch (e) {}
+      var q = new URLSearchParams();
+      FUNCTIONS.forEach(function (fn) { q.set(fn, config[fn]); });
+      history.replaceState(null, "", location.pathname + "?" + q.toString());
+    }
+
+    function checkWarnings() {
+      var used = {}, dupes = [];
+      FUNCTIONS.forEach(function (fn) {
+        var v = config[fn];
+        if (used[v]) dupes.push(v); else used[v] = fn;
+      });
+      var warn = document.getElementById("warn");
+      if (dupes.length) {
+        warn.textContent = "⚠ Two functions share the same button - highlights will overlap. Give each its own button.";
+      } else { warn.textContent = ""; }
+    }
+
+    function scalePreview() {
+      var wrap = document.getElementById("preview-scale");
+      var avail = wrap.parentElement.clientWidth;
+      var scale = Math.min(1, avail / 1056);
+      wrap.style.transform = "scale(" + scale + ")";
+      wrap.style.height = 816 * scale + "px";
+    }
+
+    function update() {
+      renderSheet(document.getElementById("sheet"), config);
+      checkWarnings();
+      persist();
+      scalePreview();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      populateSelects();
+      config = readFromParamsOrStorage();
+      syncFormFromConfig();
+
+      FUNCTIONS.forEach(function (fn) {
+        document.getElementById("sel-" + fn).addEventListener("change", function (e) {
+          config[fn] = e.target.value;
+          update();
+        });
+      });
+
+      document.getElementById("btn-print").addEventListener("click", function () { window.print(); });
+      document.getElementById("btn-reset").addEventListener("click", function () {
+        config = Object.assign({}, DEFAULTS); syncFormFromConfig(); update();
+      });
+      document.getElementById("btn-share").addEventListener("click", function () {
+        var toast = document.getElementById("toast");
+        navigator.clipboard.writeText(location.href).then(function () {
+          toast.textContent = "Link copied - share it to reopen this exact mapping.";
+          setTimeout(function () { toast.textContent = ""; }, 3000);
+        }).catch(function () { toast.textContent = location.href; });
+      });
+
+      update();
+    });
+
+    window.addEventListener("resize", scalePreview);
+  </script>
+</body>
+</html>

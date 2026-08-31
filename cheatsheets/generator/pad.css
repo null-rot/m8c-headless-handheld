@@ -1,0 +1,74 @@
+/* Highlight system for the flexible (full-remap) gamepad pad.
+ * Command tokens on the .buttons svg (edit/option/shift/play/quit/up/down/left/right,
+ * with hold/1st/2nd variants + double) light up whichever control currently carries the
+ * matching function-class (edit_button, ..., applied by applyPadConfig()). */
+
+.bkg, .hold, .first, .second, .double_tap { opacity: 0; }
+
+/* token -> function-class : show bkg on tap, hold glyph on hold, numerals on 1st/2nd */
+.edit   .edit_button   .bkg,
+.edithold   .edit_button   .hold,
+.edit1st   .edit_button   .first, .edit1st   .edit_button   .bkg,
+.edit2nd   .edit_button   .second, .edit2nd   .edit_button   .bkg,
+.option .option_button .bkg,
+.optionhold .option_button .hold,
+.option1st .option_button .first, .option1st .option_button .bkg,
+.option2nd .option_button .second, .option2nd .option_button .bkg,
+.shift  .shift_button  .bkg,
+.shifthold  .shift_button  .hold,
+.shift1st  .shift_button  .first, .shift1st  .shift_button  .bkg,
+.shift2nd  .shift_button  .second, .shift2nd  .shift_button  .bkg,
+.play   .play_button   .bkg,
+.playhold   .play_button   .hold,
+.play1st   .play_button   .first, .play1st   .play_button   .bkg,
+.play2nd   .play_button   .second, .play2nd   .play_button   .bkg,
+.quit   .quit_button   .bkg,
+.quithold   .quit_button   .hold,
+.up     .up_button     .bkg,
+.uphold     .up_button     .hold,
+.up1st     .up_button     .first, .up1st     .up_button     .bkg,
+.up2nd     .up_button     .second, .up2nd     .up_button     .bkg,
+.down   .down_button   .bkg,
+.downhold   .down_button   .hold,
+.down1st   .down_button   .first, .down1st   .down_button   .bkg,
+.down2nd   .down_button   .second, .down2nd   .down_button   .bkg,
+.left   .left_button   .bkg,
+.lefthold   .left_button   .hold,
+.left1st   .left_button   .first, .left1st   .left_button   .bkg,
+.left2nd   .left_button   .second, .left2nd   .left_button   .bkg,
+.right  .right_button  .bkg,
+.righthold  .right_button  .hold,
+.right1st  .right_button  .first, .right1st  .right_button  .bkg,
+.right2nd  .right_button  .second, .right2nd  .right_button  .bkg {
+  opacity: 1;
+}
+
+/* when a button is "held", swap its grey placeholder for the dark hold glyph */
+.edithold   .edit_button   .placeholder,
+.optionhold .option_button .placeholder,
+.shifthold  .shift_button  .placeholder,
+.playhold   .play_button   .placeholder,
+.quithold   .quit_button   .placeholder,
+.uphold     .up_button     .placeholder,
+.downhold   .down_button   .placeholder,
+.lefthold   .left_button   .placeholder,
+.righthold  .right_button  .placeholder {
+  opacity: 0;
+}
+
+/* double-tap "x2" badge, next to whichever button is double-tapped */
+.edit.double   .edit_button   .double_tap,
+.edit1st.double .edit_button  .double_tap,
+.edit2nd.double .edit_button  .double_tap,
+.option.double .option_button .double_tap,
+.play.double   .play_button   .double_tap,
+.up.double     .up_button     .double_tap {
+  opacity: 1;
+}
+
+/* labels: dim controls with no M8 function; emphasise assigned ones */
+.ctrl-label { font-family: "SofiaSansCond", "Arial Narrow", sans-serif; font-weight: 700; fill: #333; }
+.dpad-label { fill: #333; }
+.ctrl.unused .placeholder { fill: #EEE; }
+.ctrl.unused .ctrl-label { fill: #C4C4C4; font-weight: 500; }
+.ctrl.assigned .placeholder { fill: #CFCFCF; }

@@ -1,0 +1,37 @@
+# GitHub Pages deploy for the cheat-sheet generator.
+# Copy this to  .github/workflows/pages.yml  in the repo you publish from,
+# then in the repo: Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+# The generator is a static site (no build step) - it just uploads the files.
+
+name: Deploy generator to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the folder that contains BOTH `generator/` and `fonts/`
+          # (the generator references ../fonts). Adjust if your layout differs.
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
