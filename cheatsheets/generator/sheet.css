@@ -3,7 +3,7 @@
  * fit the preview on screen, and @media print reproduces it at full size. */
 
 .sheet {
-  width: 1056px;
+  width: 1056px;   /* US Letter landscape @96dpi (11 x 8.5in) */
   height: 816px;
   box-sizing: border-box;
   background: #fff;
@@ -15,6 +15,7 @@
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
+.sheet.paper-a4:not(.fold) { width: 1123px; height: 794px; } /* A4 landscape (297 x 210mm) */
 
 .sheet .content { display: flex; flex-direction: row; gap: 4mm; height: 100%; }
 .sheet .column { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5mm; }
@@ -78,7 +79,8 @@
 
 /* ---- print: reproduce the sheet full-size, hide the app ---- */
 @media print {
-  @page { size: letter landscape; margin: 4mm; }
+  @page letterland { size: letter landscape; margin: 4mm; }
+  @page a4land { size: A4 landscape; margin: 4mm; }
   body * { visibility: hidden !important; }
   .sheet, .sheet * { visibility: visible !important; }
   .sheet { position: absolute; left: 0; top: 0; transform: none !important; box-shadow: none; border: none; }
@@ -86,4 +88,6 @@
     width: 100%; height: auto; min-height: 0;
     padding: 0; overflow: visible;
   }
+  .sheet.paper-letter:not(.fold) { page: letterland; }
+  .sheet.paper-a4:not(.fold) { page: a4land; }
 }

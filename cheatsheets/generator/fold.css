@@ -63,8 +63,11 @@
 .sheet.fold .rotate180 { transform: rotateZ(180deg); }
 .sheet.fold .rotate270 { transform: rotateZ(270deg); }
 
-/* ---- print: portrait for the fold booklet ---- */
+/* ---- print: portrait for the fold booklet (Letter or A4) ---- */
 @media print {
-  @page foldpage { size: letter portrait; margin: 0.25in; }
-  .sheet.fold { page: foldpage; width: auto; height: auto; padding: 0; transform: none !important; }
+  @page letterport { size: letter portrait; margin: 0.25in; }
+  @page a4port { size: A4 portrait; margin: 0.25in; }
+  .sheet.fold { width: auto; height: auto; padding: 0; transform: none !important; }
+  .sheet.fold.paper-letter { page: letterport; }
+  .sheet.fold.paper-a4 { page: a4port; }
 }

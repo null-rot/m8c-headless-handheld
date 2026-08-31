@@ -115,8 +115,11 @@ function renderFold(root, cfg) {
   recto.querySelector(".page").prepend(foldLegendBanner(cfg));
 }
 
-/* Dispatcher: pick the layout by cfg.format ('single' | 'fold'). */
+/* Dispatcher: pick the layout by cfg.format ('single' | 'fold')
+   and the paper size by cfg.paper ('letter' | 'a4'). */
 function renderInto(root, cfg) {
+  root.classList.remove("paper-letter", "paper-a4");
+  root.classList.add(cfg.paper === "a4" ? "paper-a4" : "paper-letter");
   if (cfg.format === "fold") {
     root.classList.add("fold");
     renderFold(root, cfg);

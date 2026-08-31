@@ -61,6 +61,13 @@
           </select>
         </div>
         <div class="field">
+          <label>Paper size</label>
+          <select id="sel-paper">
+            <option value="letter">US Letter</option>
+            <option value="a4">A4</option>
+          </select>
+        </div>
+        <div class="field">
           <label>Button legend <span class="hint">(your device's names)</span></label>
           <select id="sel-legend"></select>
         </div>
@@ -91,9 +98,9 @@
   </div>
 
   <script>
-    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device", format: "single" };
+    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device", format: "single", paper: "letter" };
     var FUNCTIONS = ["edit", "option", "shift", "play", "quit"];
-    var EXTRAS = ["legend", "labelMode", "format"];
+    var EXTRAS = ["legend", "labelMode", "format", "paper"];
     var config = Object.assign({}, DEFAULTS);
 
     // options for the function selects = every physical control (not the d-pad),
@@ -149,6 +156,7 @@
       document.getElementById("sel-legend").value = config.legend;
       document.getElementById("sel-labelmode").value = config.labelMode;
       document.getElementById("sel-format").value = config.format;
+      document.getElementById("sel-paper").value = config.paper;
     }
 
     function persist() {
@@ -189,9 +197,10 @@
       persist();
       scalePreview();
       var hint = document.getElementById("preview-hint");
+      var paper = config.paper === "a4" ? "A4" : "US Letter";
       hint.textContent = config.format === "fold"
-        ? "Live preview. Print: US Letter, PORTRAIT, Background Graphics ON. Fold on the dotted lines, cut the corner marks."
-        : "Live preview. Print: US Letter, LANDSCAPE, margins None/Minimum, Background Graphics ON.";
+        ? "Live preview. Print: " + paper + ", PORTRAIT, Background Graphics ON. Fold on the dotted lines, cut the corner marks."
+        : "Live preview. Print: " + paper + ", LANDSCAPE, margins None/Minimum, Background Graphics ON.";
     }
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -218,6 +227,10 @@
       });
       document.getElementById("sel-format").addEventListener("change", function (e) {
         config.format = e.target.value;
+        update();
+      });
+      document.getElementById("sel-paper").addEventListener("change", function (e) {
+        config.paper = e.target.value;
         update();
       });
 
