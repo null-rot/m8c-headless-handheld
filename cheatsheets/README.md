@@ -54,5 +54,4 @@ The M8 tracker is a product of **[Dirtywave](https://dirtywave.com/)**; `m8c` is
 **[laamaa](https://github.com/laamaa/m8c)**.
 
 > Both upstream M8Guide repos ship **without a license** (all rights reserved), and
-> cengebretson's is itself based on LaurentVitalis's. Please **credit both authors and seek
-> their permission** before distributing these publicly.
+> cengebretson's is itself based on LaurentVitalis's.
