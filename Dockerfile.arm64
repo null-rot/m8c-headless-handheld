@@ -2,7 +2,9 @@ FROM --platform=linux/arm64 ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LINUX_KERNEL_VERSION=4.9.170
-ENV M8C_VERSION=1.7.10
+# Default only - build.sh normally overrides this with the latest laamaa/m8c release.
+ARG M8C_VERSION=2.2.3
+ENV M8C_VERSION=${M8C_VERSION}
 
 # Update and install required packages
 RUN apt-get update && apt-get install -y \
@@ -11,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     make \
     gcc \
     sed \
+    file \
     ca-certificates \
     bc \
     libssl-dev \
@@ -47,8 +50,13 @@ ENV CXX=g++
 ENV PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig
 ENV SDL_CONFIG=/usr/bin/sdl2-config
 
-# Ensure the output directory exists
-RUN mkdir -p /build/compiled/m8c
+# muOS package template (launcher + default config.ini). Single source of truth is
+# examples/muos-m8c-1.7.10 in the repo; build_script.sh drops this build's fresh
+# binary + kernel modules into it. Update that folder to change muOS defaults.
+COPY examples/muos-m8c-1.7.10 /build/templates/muos
+
+# Ensure the output directories exist
+RUN mkdir -p /build/compiled/knulli/m8c /build/compiled/muos/.m8c
 
 # Copy the ARM64-specific build script
 COPY build_script.arm64.sh /build/build_script.sh

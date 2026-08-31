@@ -4,8 +4,8 @@ set -e
 
 cd /build
 
-# Create output directory (in case it wasn't created by Docker)
-mkdir -p /build/compiled/m8c
+# Create output directories (in case they weren't created by Docker)
+mkdir -p /build/compiled/knulli/m8c /build/compiled/muos/.m8c/.local/share/m8c
 
 # Build m8c
 echo "Building m8c..."
@@ -37,22 +37,29 @@ make ARCH=arm64 M=sound/usb
 # Collect files
 echo "Collecting files..."
 
-# Copy kernel modules
+# Copy kernel modules into both packages
 for module in cdc-acm.ko snd-hwdep.ko snd-usbmidi-lib.ko snd-usb-audio.ko; do
-  find /build/linux-$LINUX_KERNEL_VERSION -name "$module" -exec cp -v {} /build/compiled/m8c \; || echo "Warning: $module not found"
+  MODULE_PATH=$(find /build/linux-$LINUX_KERNEL_VERSION -name "$module" | head -n1)
+  if [ -n "$MODULE_PATH" ]; then
+    cp -v "$MODULE_PATH" /build/compiled/knulli/m8c/
+    cp -v "$MODULE_PATH" /build/compiled/muos/.m8c/
+  else
+    echo "Warning: $module not found"
+  fi
 done
 
-# Copy m8c executable
+# Copy m8c executable into both packages
 if [ -f "/build/m8c/m8c" ]; then
-  cp -v /build/m8c/m8c /build/compiled/m8c
+  cp -v /build/m8c/m8c /build/compiled/knulli/m8c/
+  cp -v /build/m8c/m8c /build/compiled/muos/.m8c/
   echo "Copied m8c executable"
 else
   echo "Error: m8c executable not found"
   exit 1
 fi
 
-# Create m8c.sh script
-sed "s/\$LINUX_KERNEL_VERSION/$LINUX_KERNEL_VERSION/" <<'EOF' >/build/compiled/m8c.sh
+# --- Knulli package: launcher script ---
+sed "s/\$LINUX_KERNEL_VERSION/$LINUX_KERNEL_VERSION/" <<'EOF' >/build/compiled/knulli/m8c.sh
 #!/bin/sh
 
 export HOME=$(dirname $(realpath $0))/m8c
@@ -72,7 +79,13 @@ SDL_GAMECONTROLLERCONFIG="19000000010000000100000000010000,Deeplay-keys,a:b3,b:b
 kill $(jobs -p)
 EOF
 
-chmod +x /build/compiled/m8c.sh
+chmod +x /build/compiled/knulli/m8c.sh
+
+# --- muOS package: launcher + config.ini come from the validated template
+# (examples/muos-m8c-1.7.10 in the repo) - only the binary/modules above are fresh. ---
+cp /build/templates/muos/m8c.sh /build/compiled/muos/m8c.sh
+cp /build/templates/muos/.m8c/.local/share/m8c/config.ini /build/compiled/muos/.m8c/.local/share/m8c/config.ini
+chmod +x /build/compiled/muos/m8c.sh
 
 #
 # Final checks and summary
@@ -80,42 +93,61 @@ chmod +x /build/compiled/m8c.sh
 check_build_output() {
     local error_count=0
     local warning_count=0
+    local modules=("cdc-acm.ko" "snd-hwdep.ko" "snd-usbmidi-lib.ko" "snd-usb-audio.ko")
 
-    # Check m8c executable
-    if [ -f "/build/compiled/m8c/m8c" ]; then
-        file_type=$(file /build/compiled/m8c/m8c)
+    echo "--- Knulli package (/build/compiled/knulli) ---"
+    if [ -f "/build/compiled/knulli/m8c/m8c" ]; then
+        file_type=$(file /build/compiled/knulli/m8c/m8c)
         if [[ $file_type == *"ARM aarch64"* && $file_type == *"LSB"* && $file_type == *"executable"* ]]; then
-            echo "✓ m8c executable present and valid ($(basename "$file_type"))"
+            echo "OK   m8c executable present and valid"
         else
-            echo "✗ m8c executable present but may be invalid: $file_type"
+            echo "FAIL m8c executable present but may be invalid: $file_type"
             ((error_count++))
         fi
     else
-        echo "✗ m8c executable missing"
+        echo "FAIL m8c executable missing"
         ((error_count++))
     fi
-
-    # Check kernel modules
-    modules=("cdc-acm.ko" "snd-hwdep.ko" "snd-usbmidi-lib.ko" "snd-usb-audio.ko")
     for module in "${modules[@]}"; do
-        if [ -f "/build/compiled/m8c/$module" ]; then
-            echo "✓ Kernel module $module present"
+        if [ -f "/build/compiled/knulli/m8c/$module" ]; then
+            echo "OK   kernel module $module present"
         else
-            echo "✗ Kernel module $module missing"
+            echo "WARN kernel module $module missing"
             ((warning_count++))
         fi
     done
+    if [ -f "/build/compiled/knulli/m8c.sh" ] && grep -q "SDL_GAMECONTROLLERCONFIG" "/build/compiled/knulli/m8c.sh"; then
+        echo "OK   knulli m8c.sh present and valid"
+    else
+        echo "FAIL knulli m8c.sh missing or invalid"
+        ((error_count++))
+    fi
 
-    # Check m8c.sh script
-    if [ -f "/build/compiled/m8c.sh" ]; then
-        if grep -q "SDL_GAMECONTROLLERCONFIG" "/build/compiled/m8c.sh"; then
-            echo "✓ m8c.sh script present and contains expected content"
+    echo "--- muOS package (/build/compiled/muos) ---"
+    if [ -f "/build/compiled/muos/.m8c/m8c" ]; then
+        file_type=$(file /build/compiled/muos/.m8c/m8c)
+        if [[ $file_type == *"ARM aarch64"* && $file_type == *"LSB"* && $file_type == *"executable"* ]]; then
+            echo "OK   m8c executable present and valid"
         else
-            echo "✗ m8c.sh script present but may be invalid"
-            ((warning_count++))
+            echo "FAIL m8c executable present but may be invalid: $file_type"
+            ((error_count++))
         fi
     else
-        echo "✗ m8c.sh script missing"
+        echo "FAIL m8c executable missing"
+        ((error_count++))
+    fi
+    for module in "${modules[@]}"; do
+        if [ -f "/build/compiled/muos/.m8c/$module" ]; then
+            echo "OK   kernel module $module present"
+        else
+            echo "WARN kernel module $module missing"
+            ((warning_count++))
+        fi
+    done
+    if [ -f "/build/compiled/muos/m8c.sh" ] && [ -f "/build/compiled/muos/.m8c/.local/share/m8c/config.ini" ]; then
+        echo "OK   muos m8c.sh + config.ini present"
+    else
+        echo "FAIL muos m8c.sh or config.ini missing"
         ((error_count++))
     fi
 
@@ -139,4 +171,6 @@ check_build_output() {
 # Run the checks
 check_build_output
 
-echo "Build and check process complete. All compiled files are in /build/compiled/m8c"
+echo "Build and check process complete."
+echo "  Knulli package: /build/compiled/knulli/  (m8c.sh + m8c/ -> roms/ports)"
+echo "  muOS package:   /build/compiled/muos/    (m8c.sh + .m8c/ -> ROMS/Ports)"
