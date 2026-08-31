@@ -7,9 +7,11 @@
   <link href="../fonts/sofiasans.css" rel="stylesheet">
   <link rel="stylesheet" href="pad.css">
   <link rel="stylesheet" href="sheet.css">
+  <link rel="stylesheet" href="fold.css">
   <link rel="stylesheet" href="app.css">
   <script src="pad.js"></script>
   <script src="data.js"></script>
+  <script src="data-fold.js"></script>
   <script src="render.js"></script>
 </head>
 <body>
@@ -52,6 +54,13 @@
       <fieldset>
         <legend>Display</legend>
         <div class="field">
+          <label>Format</label>
+          <select id="sel-format">
+            <option value="single">Single page (landscape)</option>
+            <option value="fold">Pocket fold booklet (portrait)</option>
+          </select>
+        </div>
+        <div class="field">
           <label>Button legend <span class="hint">(your device's names)</span></label>
           <select id="sel-legend"></select>
         </div>
@@ -74,7 +83,7 @@
     </div>
 
     <div class="preview">
-      <p class="preview-hint">Live preview - this is exactly what prints (US Letter, landscape).</p>
+      <p class="preview-hint" id="preview-hint">Live preview - this is exactly what prints.</p>
       <div class="preview-scale" id="preview-scale">
         <div class="sheet" id="sheet"></div>
       </div>
@@ -82,9 +91,9 @@
   </div>
 
   <script>
-    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device" };
+    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device", format: "single" };
     var FUNCTIONS = ["edit", "option", "shift", "play", "quit"];
-    var EXTRAS = ["legend", "labelMode"];
+    var EXTRAS = ["legend", "labelMode", "format"];
     var config = Object.assign({}, DEFAULTS);
 
     // options for the function selects = every physical control (not the d-pad),
@@ -139,6 +148,7 @@
       FUNCTIONS.forEach(function (fn) { document.getElementById("sel-" + fn).value = config[fn]; });
       document.getElementById("sel-legend").value = config.legend;
       document.getElementById("sel-labelmode").value = config.labelMode;
+      document.getElementById("sel-format").value = config.format;
     }
 
     function persist() {
@@ -162,17 +172,26 @@
 
     function scalePreview() {
       var wrap = document.getElementById("preview-scale");
+      var sheet = document.getElementById("sheet");
+      wrap.style.transform = "none";           // measure natural size
+      var w = sheet.offsetWidth || 1056;
+      var h = sheet.offsetHeight || 816;
       var avail = wrap.parentElement.clientWidth;
-      var scale = Math.min(1, avail / 1056);
+      var scale = Math.min(1, avail / w);
+      wrap.style.transformOrigin = "top left";
       wrap.style.transform = "scale(" + scale + ")";
-      wrap.style.height = 816 * scale + "px";
+      wrap.style.height = h * scale + "px";
     }
 
     function update() {
-      renderSheet(document.getElementById("sheet"), config);
+      renderInto(document.getElementById("sheet"), config);
       checkWarnings();
       persist();
       scalePreview();
+      var hint = document.getElementById("preview-hint");
+      hint.textContent = config.format === "fold"
+        ? "Live preview. Print: US Letter, PORTRAIT, Background Graphics ON. Fold on the dotted lines, cut the corner marks."
+        : "Live preview. Print: US Letter, LANDSCAPE, margins None/Minimum, Background Graphics ON.";
     }
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -195,6 +214,10 @@
       });
       document.getElementById("sel-labelmode").addEventListener("change", function (e) {
         config.labelMode = e.target.value;
+        update();
+      });
+      document.getElementById("sel-format").addEventListener("change", function (e) {
+        config.format = e.target.value;
         update();
       });
 

@@ -68,3 +68,60 @@ function renderSheet(root, cfg) {
     target.appendChild(sc);
   });
 }
+
+/* ---- Fold booklet (4 small pages, cut/fold marks) ---- */
+
+function foldPage(page, cfg) {
+  const p = document.createElement("div");
+  p.className = "page";
+  page.sections.forEach((section) => {
+    const s = document.createElement("div");
+    s.className = "section";
+    s.textContent = section.section || section.name;
+    p.appendChild(s);
+    // reuse the compact flex row from the single-page card
+    section.actions.forEach((a) => p.appendChild(makeAction(a, cfg)));
+  });
+  return p;
+}
+
+function foldLegendBanner(cfg) {
+  const L = (id) => ctrlLabel(id, cfg.legend);
+  const div = document.createElement("div");
+  div.className = "legend";
+  div.innerHTML =
+    "<div class='maprow'><b>SHIFT</b>=" + L(cfg.shift) + " &middot; <b>PLAY</b>=" + L(cfg.play) +
+    " &middot; <b>EDIT</b>=" + L(cfg.edit) + " &middot; <b>OPTION</b>=" + L(cfg.option) +
+    " &middot; <b>D-pad</b>=Up/Down/Left/Right &middot; <b>Quit</b>=" + L(cfg.shift) + "+" + L(cfg.quit) +
+    " &middot; <span class='note'>icons=your buttons, words=M8 names</span></div>";
+  return div;
+}
+
+function renderFold(root, cfg) {
+  root.innerHTML =
+    "<div class='guide'>" +
+    "<div class='row'><div class='cut'></div><div class='fold'></div><div class='cut rotate90'></div></div>" +
+    "<div class='row'><div class='fold rotate90'></div><div>" +
+    "<div class='spread' id='recto'></div><div class='spread' id='verso'></div>" +
+    "</div><div class='fold rotate90'></div></div>" +
+    "<div class='row'><div class='cut rotate270'></div><div class='fold'></div><div class='cut rotate180'></div></div>" +
+    "</div>";
+  const recto = root.querySelector("#recto");
+  const verso = root.querySelector("#verso");
+  recto.appendChild(foldPage(FOLD_PAGES[0], cfg));
+  recto.appendChild(foldPage(FOLD_PAGES[3], cfg));
+  verso.appendChild(foldPage(FOLD_PAGES[1], cfg));
+  verso.appendChild(foldPage(FOLD_PAGES[2], cfg));
+  recto.querySelector(".page").prepend(foldLegendBanner(cfg));
+}
+
+/* Dispatcher: pick the layout by cfg.format ('single' | 'fold'). */
+function renderInto(root, cfg) {
+  if (cfg.format === "fold") {
+    root.classList.add("fold");
+    renderFold(root, cfg);
+  } else {
+    root.classList.remove("fold");
+    renderSheet(root, cfg);
+  }
+}

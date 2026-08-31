@@ -1,0 +1,70 @@
+/* Pocket FOLD booklet layout, scoped under .sheet.fold so it coexists with the
+ * single-page styles. Highlight tokens come from pad.css. Derivative of
+ * LaurentVitalis/M8Guide. Prints portrait (named @page) with cut/fold marks. */
+
+.sheet.fold {
+  width: auto;
+  height: auto;
+  padding: 0;
+  overflow: visible;
+  background: #fff;
+  font-size: 7px;   /* same base as the single-page card so inherited em sizes match */
+  line-height: 1;
+}
+
+.sheet.fold .guide { display: table; }
+.sheet.fold .row { display: table-row; }
+.sheet.fold .row > div { display: table-cell; }
+
+.sheet.fold .page {
+  width: 90mm;
+  height: 118mm;
+  padding: 3mm 3mm 3mm 5mm;
+  padding-top: 4mm;
+  border: dotted 0.125mm #ddd;
+}
+.sheet.fold #recto > .page { transform: rotateZ(180deg); }
+.sheet.fold .spread { display: flex; width: 180mm; }
+
+.sheet.fold .section {
+  font-family: "SofiaSans", sans-serif;
+  font-weight: 800;
+  font-size: 8.5px;
+  text-transform: uppercase;
+}
+.sheet.fold .section:before { content: "\2022"; margin-right: 1mm; }
+.sheet.fold .section:not(:first-child) { margin-top: 1.1mm; margin-bottom: 0.5mm; }
+
+/* rows/text/labels inherit the compact single-page styles from sheet.css;
+   only the pad size is fold-specific */
+.sheet.fold .buttons { width: 11mm; height: 6.6mm; }
+.sheet.fold .action { padding: 0.05mm 0.5mm; }
+.sheet.fold .action_text { margin-left: 1.8mm; }
+
+/* mapping banner at the top of the first page */
+.sheet.fold .legend {
+  font-family: "SofiaSansCond", "Arial Narrow", sans-serif;
+  font-weight: 500; font-size: 6px; color: #333;
+  border: 0.2mm solid #bbb; border-radius: 1mm;
+  padding: 1mm 1.4mm; margin-bottom: 1.2mm; line-height: 1.25;
+}
+.sheet.fold .legend b { font-weight: 800; }
+.sheet.fold .legend .note { color: #888; font-style: italic; }
+
+/* cut / fold marks */
+.sheet.fold .cut:after, .sheet.fold .fold:after {
+  background-size: 7mm 7mm; display: inline-block; width: 7mm; height: 7mm;
+  content: ""; background-repeat: no-repeat; background-position: center;
+}
+.sheet.fold .cut:after { background-image: url("../cutmark.svg"); }
+.sheet.fold .fold:after { background-image: url("../foldmark.svg"); }
+.sheet.fold .fold { text-align: center; vertical-align: middle; }
+.sheet.fold .rotate90 { transform: rotateZ(90deg); }
+.sheet.fold .rotate180 { transform: rotateZ(180deg); }
+.sheet.fold .rotate270 { transform: rotateZ(270deg); }
+
+/* ---- print: portrait for the fold booklet ---- */
+@media print {
+  @page foldpage { size: letter portrait; margin: 0.25in; }
+  .sheet.fold { page: foldpage; width: auto; height: auto; padding: 0; transform: none !important; }
+}
