@@ -28,7 +28,7 @@ Then open <http://localhost:8080/generator/>.
   someone else your exact setup.
 
 ## Publish it on GitHub Pages
-1. Put this `cheatsheets` folder in a repo you own (see the note below about the vendored files).
+1. Put this `cheatsheets` folder in a repo you own.
 2. Copy `generator/deploy-pages.yml.example` to `.github/workflows/pages.yml`.
 3. Repo → Settings → Pages → Source: **GitHub Actions**.
 4. Push. Your generator will be at `https://<you>.github.io/<repo>/generator/`.
@@ -40,9 +40,6 @@ long as `generator/` and `fonts/` stay siblings.
 Landscape, **US Letter**, margins **None/Minimum**, Scale **100%**, Background Graphics
 **ON**, Headers/Footers **OFF**. `@media print` hides the form and prints only the sheet.
 
-## Note on the vendored files
-This `cheatsheets` folder began as a clone of
-[LaurentVitalis/M8Guide](https://github.com/LaurentVitalis/M8Guide) and also vendors files from
-[cengebretson/M8Guide](https://github.com/cengebretson/M8Guide). See `../README.md`
-for attribution - the upstream projects ship **without a license**, so credit the authors and
-seek permission before distributing widely.
+## Credits
+Shortcut data & layout after [LaurentVitalis/M8Guide](https://github.com/LaurentVitalis/M8Guide)
+and [cengebretson/M8Guide](https://github.com/cengebretson/M8Guide); see `../README.md`.
