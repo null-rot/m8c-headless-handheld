@@ -2,11 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>m8c-headless-handheld</title>
-  <meta http-equiv="refresh" content="0; url=cheatsheets/generator/">
-  <link rel="canonical" href="cheatsheets/generator/">
+  <meta name="description" content="Run the DirtyWave M8 headless client (m8c) on Linux retro handhelds: builds, printable controller cheat sheets, and docs.">
+  <style>
+    :root {
+      --bg: #f7f7f9; --card: #ffffff; --fg: #1a1a1c; --muted: #666; --line: #e5e5e8;
+      --accent: #2563eb; --accent-fg: #fff; --chip: #f0f1f4;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#0f1115; --card:#171a21; --fg:#e8e9ec; --muted:#9aa0aa; --line:#262a33;
+              --accent:#3b82f6; --accent-fg:#fff; --chip:#1f232c; }
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--fg);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.5; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    header h1 { font-size: 30px; margin: 0 0 6px; letter-spacing:-.01em; }
+    header p { margin: 0; color: var(--muted); font-size: 16px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px;
+      padding:20px 22px; margin-top:22px; }
+    .card h2 { font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted);
+      margin:0 0 14px; }
+    .links { display:flex; flex-direction:column; gap:2px; }
+    a.row { display:flex; align-items:baseline; gap:10px; text-decoration:none; color:inherit;
+      padding:10px 12px; border-radius:9px; }
+    a.row:hover { background:var(--chip); }
+    a.row .t { font-weight:600; color:var(--fg); }
+    a.row .d { color:var(--muted); font-size:14px; }
+    a.row .t::after { content:" \2197"; color:var(--muted); font-weight:400; font-size:.85em; }
+    .cta { display:inline-block; background:var(--accent); color:var(--accent-fg); text-decoration:none;
+      font-weight:600; padding:12px 18px; border-radius:10px; margin-top:4px; }
+    .cta:hover { filter:brightness(1.07); }
+    footer { margin-top:28px; color:var(--muted); font-size:13px; }
+    footer a { color:var(--accent); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    .repo { margin-top:14px; }
+    .repo a { color:var(--accent); text-decoration:none; font-weight:600; }
+  </style>
 </head>
 <body>
-  <p>Redirecting to the <a href="cheatsheets/generator/">M8 Controller Cheat Sheet Generator</a>.</p>
+  <div class="wrap">
+    <header>
+      <h1>m8c-headless-handheld</h1>
+      <p>Run the DirtyWave M8 headless client (<b>m8c</b>) on Linux retro handhelds:
+         builds, printable controller cheat sheets, and setup docs.</p>
+      <div class="repo"><a href="https://github.com/null-rot/m8c-headless-handheld">View the repository on GitHub &rarr;</a></div>
+    </header>
+
+    <div class="card">
+      <h2>Cheat sheets</h2>
+      <div class="links">
+        <a class="row" href="cheatsheets/generator/">
+          <span class="t">Cheat Sheet Generator</span>
+          <span class="d">pick your buttons, live preview, print / save PDF</span>
+        </a>
+        <a class="row" href="cheatsheets/shortcuts-controller.html">
+          <span class="t">Single-page card</span>
+          <span class="d">the default mapping, one landscape page</span>
+        </a>
+        <a class="row" href="cheatsheets/controller.html">
+          <span class="t">Pocket fold booklet</span>
+          <span class="d">folds to fit an M8 case</span>
+        </a>
+        <a class="row" href="cheatsheets/efx.html">
+          <span class="t">EFX &amp; synthesis reference</span>
+          <span class="d">effect codes, FM algorithms, synth params</span>
+        </a>
+      </div>
+      <a class="cta" href="cheatsheets/generator/">Open the generator</a>
+    </div>
+
+    <div class="card">
+      <h2>Read first</h2>
+      <div class="links">
+        <a class="row" href="https://github.com/null-rot/m8c-headless-handheld#readme">
+          <span class="t">Project overview</span>
+          <span class="d">what's here and how it fits together</span>
+        </a>
+        <a class="row" href="https://github.com/null-rot/m8c-headless-handheld/tree/main/docs">
+          <span class="t">Docs</span>
+          <span class="d">setup &amp; troubleshooting (work in progress)</span>
+        </a>
+        <a class="row" href="https://github.com/null-rot/m8c-headless-handheld/blob/main/docs/legacy-docker-build.md">
+          <span class="t">Build notes</span>
+          <span class="d">compiling m8c + kernel modules for the H700</span>
+        </a>
+        <a class="row" href="https://github.com/null-rot/m8c-headless-handheld/tree/main/examples/muos-m8c-1.7.10">
+          <span class="t">MuOS port example</span>
+          <span class="d">a ready-to-drop <code>ROMS/Ports</code> package</span>
+        </a>
+      </div>
+    </div>
+
+    <footer>
+      Cheat sheets adapted from
+      <a href="https://github.com/LaurentVitalis/M8Guide">LaurentVitalis/M8Guide</a> &amp;
+      <a href="https://github.com/cengebretson/M8Guide">cengebretson/M8Guide</a>.
+      M8 by <a href="https://dirtywave.com/">Dirtywave</a>;
+      <a href="https://github.com/laamaa/m8c">m8c</a> by laamaa.
+      Build based on <a href="https://github.com/jamesMcMeex/m8c-rg35xx-knulli">jamesMcMeex/m8c-rg35xx-knulli</a>.
+    </footer>
+  </div>
 </body>
 </html>
