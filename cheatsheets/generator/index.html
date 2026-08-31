@@ -49,6 +49,22 @@
         <div class="warn" id="warn"></div>
       </fieldset>
 
+      <fieldset>
+        <legend>Display</legend>
+        <div class="field">
+          <label>Button legend <span class="hint">(your device's names)</span></label>
+          <select id="sel-legend"></select>
+        </div>
+        <div class="field">
+          <label>Show on buttons</label>
+          <select id="sel-labelmode">
+            <option value="device">Device names (A, B, L1 …)</option>
+            <option value="m8">M8 names (EDIT, OPT …)</option>
+            <option value="both">Both</option>
+          </select>
+        </div>
+      </fieldset>
+
       <div class="actions">
         <button class="primary" id="btn-print">Print / Save PDF</button>
         <button id="btn-share">Copy shareable link</button>
@@ -66,26 +82,40 @@
   </div>
 
   <script>
-    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1" };
+    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device" };
     var FUNCTIONS = ["edit", "option", "shift", "play", "quit"];
+    var EXTRAS = ["legend", "labelMode"];
     var config = Object.assign({}, DEFAULTS);
 
-    // options for the selects = every physical control (not the d-pad)
+    // options for the function selects = every physical control (not the d-pad),
+    // labelled with the currently selected device legend.
     function controlOptions() {
       return PAD_CONTROLS.filter(function (c) { return !c.dpad; })
-        .map(function (c) { return { id: c.id, label: (c.label ? c.label.t : c.id.toUpperCase()) }; });
+        .map(function (c) { return { id: c.id, label: deviceLabel(c.id, config.legend) }; });
     }
 
     function populateSelects() {
       var opts = controlOptions();
       FUNCTIONS.forEach(function (fn) {
         var sel = document.getElementById("sel-" + fn);
+        var cur = config[fn];
         sel.innerHTML = "";
         opts.forEach(function (o) {
           var el = document.createElement("option");
           el.value = o.id; el.textContent = o.label;
           sel.appendChild(el);
         });
+        if (cur) sel.value = cur;
+      });
+    }
+
+    function populateLegendSelect() {
+      var sel = document.getElementById("sel-legend");
+      sel.innerHTML = "";
+      Object.keys(LEGEND_NAMES).forEach(function (k) {
+        var el = document.createElement("option");
+        el.value = k; el.textContent = LEGEND_NAMES[k];
+        sel.appendChild(el);
       });
     }
 
@@ -93,8 +123,8 @@
       var q = new URLSearchParams(location.search);
       var cfg = Object.assign({}, DEFAULTS);
       var any = false;
-      FUNCTIONS.forEach(function (fn) {
-        if (q.get(fn)) { cfg[fn] = q.get(fn); any = true; }
+      FUNCTIONS.concat(EXTRAS).forEach(function (k) {
+        if (q.get(k)) { cfg[k] = q.get(k); any = true; }
       });
       if (!any) {
         try {
@@ -107,12 +137,14 @@
 
     function syncFormFromConfig() {
       FUNCTIONS.forEach(function (fn) { document.getElementById("sel-" + fn).value = config[fn]; });
+      document.getElementById("sel-legend").value = config.legend;
+      document.getElementById("sel-labelmode").value = config.labelMode;
     }
 
     function persist() {
       try { localStorage.setItem("m8cheat-config", JSON.stringify(config)); } catch (e) {}
       var q = new URLSearchParams();
-      FUNCTIONS.forEach(function (fn) { q.set(fn, config[fn]); });
+      FUNCTIONS.concat(EXTRAS).forEach(function (k) { q.set(k, config[k]); });
       history.replaceState(null, "", location.pathname + "?" + q.toString());
     }
 
@@ -144,8 +176,9 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      populateSelects();
+      populateLegendSelect();
       config = readFromParamsOrStorage();
+      populateSelects();
       syncFormFromConfig();
 
       FUNCTIONS.forEach(function (fn) {
@@ -155,9 +188,19 @@
         });
       });
 
+      document.getElementById("sel-legend").addEventListener("change", function (e) {
+        config.legend = e.target.value;
+        populateSelects(); // relabel the function options for the new legend
+        update();
+      });
+      document.getElementById("sel-labelmode").addEventListener("change", function (e) {
+        config.labelMode = e.target.value;
+        update();
+      });
+
       document.getElementById("btn-print").addEventListener("click", function () { window.print(); });
       document.getElementById("btn-reset").addEventListener("click", function () {
-        config = Object.assign({}, DEFAULTS); syncFormFromConfig(); update();
+        config = Object.assign({}, DEFAULTS); populateSelects(); syncFormFromConfig(); update();
       });
       document.getElementById("btn-share").addEventListener("click", function () {
         var toast = document.getElementById("toast");

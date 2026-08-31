@@ -106,12 +106,64 @@ const FUNCTION_CLASS = {
   quit: "quit_button",
 };
 
+// Universal physical labels, plus per-device face-button legends.
+const BASE_LABELS = {
+  l2: "L2", l1: "L1", r1: "R1", r2: "R2",
+  select: "SELECT", start: "START", l3: "L3", r3: "R3",
+  up: "UP", down: "DOWN", left: "LEFT", right: "RIGHT",
+};
+const FACE_LEGENDS = {
+  nintendo:    { a: "A", b: "B", x: "X", y: "Y" },
+  xbox:        { a: "B", b: "A", x: "Y", y: "X" },
+  playstation: { a: "○", b: "✕", x: "△", y: "□" }, // circle cross triangle square
+};
+const LEGEND_NAMES = {
+  nintendo: "Nintendo / Anbernic (A B X Y)",
+  xbox: "Xbox (A B X Y swapped)",
+  playstation: "PlayStation (○ ✕ △ □)",
+};
+const M8_LABELS = { edit: "EDIT", option: "OPT", shift: "SHIFT", play: "PLAY", quit: "QUIT" };
+const SVGNS = "http://www.w3.org/2000/svg";
+
+function deviceLabel(id, legend) {
+  const fl = FACE_LEGENDS[legend] || FACE_LEGENDS.nintendo;
+  return fl[id] || BASE_LABELS[id] || String(id).toUpperCase();
+}
+function functionOn(id, cfg) {
+  for (const fn of ["edit", "option", "shift", "play", "quit"]) if (cfg[fn] === id) return fn;
+  return null;
+}
+function _ctrlId(g) {
+  for (const c of g.classList) if (c.indexOf("ctrl-") === 0) return c.slice(5);
+  return null;
+}
+function _setLabel(el, dev, m8, mode) {
+  const x = el.getAttribute("x");
+  while (el.firstChild) el.removeChild(el.firstChild);
+  if (mode === "m8" && m8) {
+    el.textContent = m8;
+  } else if (mode === "both" && m8) {
+    const t1 = document.createElementNS(SVGNS, "tspan");
+    t1.setAttribute("x", x); t1.setAttribute("dy", "-0.55em"); t1.textContent = dev;
+    const t2 = document.createElementNS(SVGNS, "tspan");
+    t2.setAttribute("x", x); t2.setAttribute("dy", "1.05em");
+    t2.setAttribute("class", "m8sub"); t2.textContent = m8;
+    el.appendChild(t1); el.appendChild(t2);
+  } else {
+    el.textContent = dev;
+  }
+}
+
 /* Apply a binding config to a rendered pad element (in place).
- * cfg = { edit:'a', option:'b', shift:'select', play:'start', quit:'l1' }
+ * cfg = { edit, option, shift, play, quit, legend, labelMode }
+ *   legend    : 'nintendo' | 'xbox' | 'playstation'  (face-button names)
+ *   labelMode : 'device' | 'm8' | 'both'             (what to print on each button)
  * Direction functions are always the D-pad. Controls with no function are dimmed.
  */
 function applyPadConfig(svgEl, cfg) {
-  // reset
+  const legend = cfg.legend || "nintendo";
+  const mode = cfg.labelMode || "device";
+
   svgEl.querySelectorAll(".ctrl").forEach((g) => {
     g.classList.remove(
       "edit_button", "option_button", "shift_button", "play_button", "quit_button",
@@ -132,6 +184,15 @@ function applyPadConfig(svgEl, cfg) {
     const g = svgEl.querySelector(`.ctrl-${id}`);
     if (g) { g.classList.add(cls, "assigned"); g.classList.remove("unused"); }
   });
+  // labels (legend + label-mode)
+  svgEl.querySelectorAll(".ctrl").forEach((g) => {
+    const el = g.querySelector(".ctrl-label");
+    if (!el) return;
+    const id = _ctrlId(g);
+    const fn = functionOn(id, cfg);
+    _setLabel(el, deviceLabel(id, legend), fn ? M8_LABELS[fn] : null, mode);
+  });
 }
 
-if (typeof module !== "undefined") module.exports = { padSvg, applyPadConfig, PAD_CONTROLS, PAD_CONTROL_IDS };
+if (typeof module !== "undefined")
+  module.exports = { padSvg, applyPadConfig, PAD_CONTROLS, PAD_CONTROL_IDS, deviceLabel, FACE_LEGENDS, LEGEND_NAMES };

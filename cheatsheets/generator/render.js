@@ -1,25 +1,22 @@
 /* Renders the personalized cheat sheet from `data` (shortcuts) + a bindings config.
  * Each row's pad is generated with padSvg(command) then personalized with applyPadConfig(). */
 
-const CTRL_LABELS = {};
-PAD_CONTROLS.forEach((c) => { if (c.label) CTRL_LABELS[c.id] = c.label.t; });
-["up", "down", "left", "right"].forEach((id) => (CTRL_LABELS[id] = id.toUpperCase()));
-
-function ctrlLabel(id) { return CTRL_LABELS[id] || "?"; }
+function ctrlLabel(id, legend) { return deviceLabel(id, legend || "nintendo"); }
 
 // Build the "Your Controls" legend section from the current bindings.
 function buildLegend(cfg) {
+  const L = (id) => ctrlLabel(id, cfg.legend);
   return {
     column: 1,
     section: "Your Controls",
     legend: true,
     actions: [
-      { name: "EDIT",   secondary: "= " + ctrlLabel(cfg.edit),   description: "Select / Enter", command: "edit" },
-      { name: "OPTION", secondary: "= " + ctrlLabel(cfg.option), description: "Cancel / Back",  command: "option" },
-      { name: "SHIFT",  secondary: "= " + ctrlLabel(cfg.shift),  description: "Shift / Alt",     command: "shift" },
-      { name: "PLAY",   secondary: "= " + ctrlLabel(cfg.play),   description: "Start / Stop",    command: "play" },
+      { name: "EDIT",   secondary: "= " + L(cfg.edit),   description: "Select / Enter", command: "edit" },
+      { name: "OPTION", secondary: "= " + L(cfg.option), description: "Cancel / Back",  command: "option" },
+      { name: "SHIFT",  secondary: "= " + L(cfg.shift),  description: "Shift / Alt",     command: "shift" },
+      { name: "PLAY",   secondary: "= " + L(cfg.play),   description: "Start / Stop",    command: "play" },
       { name: "D-PAD",  description: "Navigate / change values", command: "up down left right" },
-      { name: "Quit m8c", secondary: "= " + ctrlLabel(cfg.shift) + " + " + ctrlLabel(cfg.quit), description: "exit the app", command: "shifthold quit" },
+      { name: "Quit m8c", secondary: "= " + L(cfg.shift) + " + " + L(cfg.quit), description: "exit the app", command: "shifthold quit" },
       { name: "Selection Mode Only", description: "the grey-shaded rows", command: "", selection: true },
     ],
   };

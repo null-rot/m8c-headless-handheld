@@ -68,6 +68,8 @@
 
 /* labels: dim controls with no M8 function; emphasise assigned ones */
 .ctrl-label { font-family: "SofiaSansCond", "Arial Narrow", sans-serif; font-weight: 700; fill: #333; }
+.ctrl-label .m8sub { fill: #1d4ed8; font-size: 0.82em; }
+.ctrl.unused .ctrl-label .m8sub { fill: #9aa8d0; }
 .dpad-label { fill: #333; }
 .ctrl.unused .placeholder { fill: #EEE; }
 .ctrl.unused .ctrl-label { fill: #C4C4C4; font-weight: 500; }
