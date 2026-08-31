@@ -45,8 +45,8 @@ PLAY=START, EDIT=A, OPTION=B, quit=SELECT+L1):
 
 These cheat sheets are derivatives of two projects, with thanks to both authors:
 - **[LaurentVitalis/M8Guide](https://github.com/LaurentVitalis/M8Guide)** - the original
-  design, the SVG button-pad template, and the fold-booklet format. Their original README is
-  preserved here as [`README.upstream.md`](README.upstream.md).
+  design, the SVG button-pad template, and the fold-booklet format (see their repo for the
+  original M8-key guide and PDF).
 - **[cengebretson/M8Guide](https://github.com/cengebretson/M8Guide)** - the single-page
   layout and the firmware 6.5+ shortcut set / EFX reference.
 
