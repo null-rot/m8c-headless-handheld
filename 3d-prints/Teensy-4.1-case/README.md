@@ -1,7 +1,7 @@
 # Teensy 4.1 case (heatsink version)
 
 A two-part snap-fit case for a Teensy 4.1 fitted with a low-profile heatsink, generated
-from a parametric OpenSCAD model.
+from a parametric OpenSCAD model. Note that there is a few mm either side of the chip if using the 9mm version so it maybe safer to stick the chip after putting the case on - the scad file allows for changing the opening size to accommodate.
 
 - **Bottom half** - closed shell, flat back, PCB ledges, microSD access.
 - **Top half** - honeycomb-vented roof, square heatsink opening, USB aperture.
