@@ -1,7 +1,7 @@
 {
     "fileFormatVersion": "1",
     "parameterSets": {
-        "11": {
+        "teensy-4.1-9mm-heatsink-honeycomb": {
             "$fn": "48",
             "bead": "0.59999999999999998",
             "bead_len": "16",
