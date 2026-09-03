@@ -25,7 +25,7 @@
 part = "both";
 
 // ----- board ----------------------------------------------------------
-board_l      = 61.0;
+board_l      = 59.0;
 board_w      = 17.8;
 board_t      = 1.6;
 usb_over     = 1.6;    // USB jack overhang past the PCB edge
@@ -49,18 +49,18 @@ fit_clear    = 0.15;
 lip_h        = 2.60;
 lip_t        = 0.85;
 lead_in      = 0.55;
-bead         = 0.70;
+bead         = 0.60;
 bead_len     = 16.0;
-bead_z       = 1.40;
-bead_proud   = 0.35;   // how far the bump pokes out past the tongue's
+bead_z       = 1.30;
+bead_proud   = 0.40;   // how far the bump pokes out past the tongue's
                         // own face; the rest of its radius is buried in
                         // the tongue so it's backed by solid material
 
 // ----- USB aperture (+Y end, above the PCB) ---------------------------
-usb_w        = 9.60;   // jack is 7.5 wide
+usb_w        = 8.60;   // jack is 7.5 wide
 usb_h        = 3.50;   // jack is 2.55 tall
-usb_drop     = 0.50;   // how far the aperture starts BELOW the PCB top
-usb_chamfer  = 0.80;   // lead-in on the outer face, per side
+usb_drop     = 0.40;   // how far the aperture starts BELOW the PCB top
+usb_chamfer  = 2.60;   // lead-in on the outer face, per side
 
 // ----- microSD access -------------------------------------------------
 //  Socket is mounted on the TOP of the board at the end OPPOSITE the USB,
@@ -68,9 +68,9 @@ usb_chamfer  = 0.80;   // lead-in on the outer face, per side
 //  top half rather than a slot, so you can get a fingertip on the card.
 //  Set sd_at_minus_y = false if your board is fitted the other way round.
 sd_at_minus_y = true;
-sd_w         = 15.0;   // mouth width; card is 11 wide
-sd_drop      = 0.40;   // how far the mouth starts BELOW the PCB top
-sd_chamfer   = 0.80;   // lead-in on the outer face, per side
+sd_w         = 12.0;   // mouth width; card is 11 wide
+sd_drop      = 0.00;   // how far the mouth starts BELOW the PCB top
+sd_chamfer   = 0.00;   // lead-in on the outer face, per side
 
 //  Finger-pull groove: a semicircular scallop cut into the TOP of the
 //  roof, right at the SD mouth, so a fingertip can hook the card's top
@@ -78,31 +78,31 @@ sd_chamfer   = 0.80;   // lead-in on the outer face, per side
 //  from each side edge of the SD mouth) and cuts sd_notch_depth into
 //  the lid, starting from the outer edge of the case.
 sd_notch         = true;   // set false to omit the finger groove
-sd_notch_inset_l = 2.00;   // gap kept clear at the LEFT edge of the mouth
-sd_notch_inset_r = 2.00;   // gap kept clear at the RIGHT edge of the mouth
-sd_notch_depth   = 2.50;   // how far the scallop reaches into the lid
+sd_notch_inset_l = 0.00;   // gap kept clear at the LEFT edge of the mouth
+sd_notch_inset_r = 0.00;   // gap kept clear at the RIGHT edge of the mouth
+sd_notch_depth   = 4.50;   // how far the scallop reaches into the lid
 
 // ----- heatsink opening -----------------------------------------------
 heatsink     = true;
 hs_size      = 9.00;   // your heatsink is 9 x 9 x 5
-hs_clear     = 0.35;   // per side
+hs_clear     = 0.40;   // per side
 hs_margin    = 2.00;   // solid roof kept around the opening
-hs_offset_y  = 0.00;   // nudge along the board if the chip is not centred
+hs_offset_y  = 3.00;   // nudge along the board if the chip is not centred
 hs_chamfer   = 0.60;   // 45 deg relief on the OUTER face (snag/feel)
 hs_lead_in   = 0.40;   // 45 deg lead-in on the INNER face (assembly)
 
 // ----- honeycomb ------------------------------------------------------
 hex_af       = 4.50;
 hex_web      = 1.20;
-rail_end     = 5.00;
+rail_end     = 3.00;
 rail_side    = 1.00;
 
 // ----- PCB retention --------------------------------------------------
 ledge_w      = 1.50;
 clamp_pads   = true;
-pad_l        = 3.00;
+pad_l        = 4.00;
 pad_w        = 1.40;
-pad_inset    = 6.00;   // from each end of the PCB
+pad_inset    = 3.00;   // from each end of the PCB
 
 $fn = 48;
 eps = 0.01;
