@@ -14,9 +14,11 @@ no supports needed.
 
 | File | What it is |
 |------|-------------|
-| [`teensy-4.1-case-heatsink-v1.scad`](teensy-4.1-case-heatsink-v1.scad) | Parametric OpenSCAD source - edit this to change any dimension |
-| [`teensy-4.1-case-heatsink-v1.stl`](teensy-4.1-case-heatsink-v1.stl) | Exported mesh of both halves, ready to slice |
-| [`teensy-4.1-case-heatsink-v1.3mf`](teensy-4.1-case-heatsink-v1.3mf) | Slicer project (plate layout + print settings) |
+| [`teensy-4.1-case-heatsink-v1.scad`](teensy-4.1-case-heatsink-v1.scad) | Parametric OpenSCAD source - edit this to change any dimension. Defaults match the `teensy-4.1-9mm-heatsink-honeycomb` preset below |
+| [`teensy-4.1-case-heatsink-v1.json`](teensy-4.1-case-heatsink-v1.json) | OpenSCAD Customizer parameter sets - named presets for each variant, loadable from the Customizer tab |
+| [`teensy-4.1-case-9mm-heatsink-honeycomb-v1.stl`](teensy-4.1-case-9mm-heatsink-honeycomb-v1.stl) | Exported mesh, both halves - 9x9x5mm heatsink opening, honeycomb-vented roof (the default) |
+| [`teensy-4.1-case-no-heatsink-honeycomb-v1.stl`](teensy-4.1-case-no-heatsink-honeycomb-v1.stl) | Exported mesh, both halves - no heatsink opening, honeycomb-vented roof |
+| [`teensy-4.1-case-no-heatsink-solid-v1.stl`](teensy-4.1-case-no-heatsink-solid-v1.stl) | Exported mesh, both halves - no heatsink opening, solid (unvented) roof |
 
 ## Fit for your board
 
@@ -34,7 +36,7 @@ else is structural. `part = "test"` renders a 24 mm coupon of each half so you c
 ### Board
 | Parameter | Value | Meaning |
 |---|---|---|
-| `board_l` | 61.0 mm | Board length |
+| `board_l` | 59.0 mm | Board length |
 | `board_w` | 17.8 mm | Board width |
 | `board_t` | 1.6 mm | Board thickness |
 | `usb_over` | 1.6 mm | USB jack overhang past the PCB edge |
@@ -63,18 +65,18 @@ else is structural. `part = "test"` renders a 24 mm coupon of each half so you c
 | `lip_h` | 2.60 mm | Tongue height |
 | `lip_t` | 0.85 mm | Tongue thickness |
 | `lead_in` | 0.55 mm | Tongue lead-in chamfer |
-| `bead` | 0.70 mm | Snap bead radius |
+| `bead` | 0.60 mm | Snap bead radius |
 | `bead_len` | 16.0 mm | Snap bead length |
-| `bead_z` | 1.40 mm | Snap bead height above the split plane |
-| `bead_proud` | 0.35 mm | How far each bead pokes past the tongue face |
+| `bead_z` | 1.30 mm | Snap bead height above the split plane |
+| `bead_proud` | 0.40 mm | How far each bead pokes past the tongue face |
 
 ### USB aperture (+Y end, above the PCB)
 | Parameter | Value | Meaning |
 |---|---|---|
-| `usb_w` | 9.60 mm | Aperture width (jack is 7.5 mm) |
+| `usb_w` | 8.60 mm | Aperture width (jack is 7.5 mm) |
 | `usb_h` | 3.50 mm | Aperture height (jack is 2.55 mm) |
-| `usb_drop` | 0.50 mm | How far the aperture starts below the PCB top |
-| `usb_chamfer` | 0.80 mm | Outer-face lead-in chamfer, per side |
+| `usb_drop` | 0.40 mm | How far the aperture starts below the PCB top |
+| `usb_chamfer` | 2.60 mm | Outer-face lead-in chamfer, per side |
 
 ### microSD access
 Socket is top-mounted at the end opposite the USB, so the card sits above the split plane;
@@ -83,21 +85,21 @@ set `sd_at_minus_y = false` if your board is fitted the other way round.
 | Parameter | Value | Meaning |
 |---|---|---|
 | `sd_at_minus_y` | true | Socket end (true = -Y, opposite the USB) |
-| `sd_w` | 15.0 mm | Mouth width (card is 11 mm) |
-| `sd_drop` | 0.40 mm | How far the mouth starts below the PCB top |
-| `sd_chamfer` | 0.80 mm | Outer-face lead-in chamfer, per side |
+| `sd_w` | 12.0 mm | Mouth width (card is 11 mm) |
+| `sd_drop` | 0.00 mm | How far the mouth starts below the PCB top |
+| `sd_chamfer` | 0.00 mm | Outer-face lead-in chamfer, per side |
 | `sd_notch` | true | Finger-pull scallop cut into the roof at the SD mouth |
-| `sd_notch_inset_l` / `sd_notch_inset_r` | 2.00 mm | Clear gap kept at each edge of the mouth |
-| `sd_notch_depth` | 2.50 mm | How far the scallop reaches into the lid |
+| `sd_notch_inset_l` / `sd_notch_inset_r` | 0.00 mm | Clear gap kept at each edge of the mouth |
+| `sd_notch_depth` | 4.50 mm | How far the scallop reaches into the lid |
 
 ### Heatsink opening
 | Parameter | Value | Meaning |
 |---|---|---|
 | `heatsink` | true | Enable the roof opening |
 | `hs_size` | 9.00 mm | Heatsink footprint (9 x 9 x 5 mm) |
-| `hs_clear` | 0.35 mm | Clearance around the heatsink, per side |
+| `hs_clear` | 0.40 mm | Clearance around the heatsink, per side |
 | `hs_margin` | 2.00 mm | Solid roof kept around the opening |
-| `hs_offset_y` | 0.00 mm | Nudge along the board if the chip isn't centred |
+| `hs_offset_y` | 3.00 mm | Nudge along the board if the chip isn't centred |
 | `hs_chamfer` | 0.60 mm | 45 deg relief on the outer face |
 | `hs_lead_in` | 0.40 mm | 45 deg lead-in on the inner face (assembly) |
 
@@ -106,7 +108,7 @@ set `sd_at_minus_y = false` if your board is fitted the other way round.
 |---|---|---|
 | `hex_af` | 4.50 mm | Hex cell across-flats size |
 | `hex_web` | 1.20 mm | Web thickness between cells |
-| `rail_end` | 5.00 mm | Solid margin kept at each end |
+| `rail_end` | 3.00 mm | Solid margin kept at each end |
 | `rail_side` | 1.00 mm | Solid margin kept at each side |
 
 ### PCB retention
@@ -114,8 +116,20 @@ set `sd_at_minus_y = false` if your board is fitted the other way round.
 |---|---|---|
 | `ledge_w` | 1.50 mm | Width of the bottom-half PCB ledges |
 | `clamp_pads` | true | Add top-half pads that clamp the board to the ledges |
-| `pad_l` / `pad_w` | 3.00 / 1.40 mm | Clamp pad size |
-| `pad_inset` | 6.00 mm | Pad position, inset from each end of the PCB |
+| `pad_l` / `pad_w` | 4.00 / 1.40 mm | Clamp pad size |
+| `pad_inset` | 3.00 mm | Pad position, inset from each end of the PCB |
+
+## Other presets
+
+The `.json` Customizer file also carries two variants without a heatsink opening
+(`heatsink = false`):
+
+- **`teensy-4.1-no-heatsink-honeycomb`** - roof keeps the honeycomb vent.
+- **`teensy-4.1-no-heatsink-solid`** - `hex_af = 0` disables the honeycomb too, giving a
+  plain solid roof.
+
+Load a preset from the OpenSCAD Customizer tab to switch; the `.scad` defaults themselves
+stay pinned to `teensy-4.1-9mm-heatsink-honeycomb`.
 
 ## Notes
 
