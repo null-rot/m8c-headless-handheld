@@ -24,16 +24,28 @@ The links below will take you to the relevant resources. Note that some are WIP 
 
 > ⚠️ **Work in progress - being reworked.**
 
-The current Docker-based build (Linux kernel modules + `m8c` for the Allwinner H700) lives at
+The Docker-based build (Linux kernel modules + `m8c` for the Allwinner H700) lives at
 the repo root: `build.sh`, `Dockerfile.arm64`, `Dockerfile.x86_64`, `build_script.*.sh`.
+Run `./build.sh` locally (Docker required), or use the cloud build below - both produce
+identical output, since the cloud build just runs this same script.
 
 The build is based on **[jamesMcMeex/m8c-rg35xx-knulli](https://github.com/jamesMcMeex/m8c-rg35xx-knulli)**,
 see their repo for the original Docker build instructions.
 
-The aim here is to take the good work jamesMcMeex has done with his docker compile and move it into something anyone can do without any local setup. The current handheld port is fixed to version 1.7 - this is due to newer versions of the M8C migrating to a new SD3 engine. 
-There is a test build i have partly working on the H700 devices.
+The aim here is to take the good work jamesMcMeex has done with his docker compile and move it into something anyone can do without any local setup. The current handheld port is fixed to version 1.7 - this is due to newer versions of the M8C migrating to a new SD3 engine.
+There is a test build i have partly working on the H700 devices (see [`docs/sdl3-westonpack-notes.md`](docs/sdl3-westonpack-notes.md)).
 
-If you do not wish to compile it yourself, both versions can be found in here; TBC
+### ☁️ Cloud build
+
+No local setup needed - **[Actions → Build m8c → Run workflow](../../actions/workflows/build-m8c.yml)**
+compiles a fresh v1.7.10 (or any version you type in) the same way `./build.sh` does. It's manual
+only (builds are infrequent), and every run stages the Knulli + muOS packages as a downloadable
+**Artifact** for testing on-device first. Once a build checks out, re-run it with
+**"Also publish a GitHub Release"** ticked to cut a [Release](../../releases) with the same files
+attached - see [`docs/install.md`](docs/install.md) for where each file goes.
+
+Once the SDL3/v2.x path is fully working, this can switch to auto-building each new
+`laamaa/m8c` release as it ships.
 
 ## 🎛️ Cheat sheets
 
@@ -63,10 +75,9 @@ The M8 tracker is a product of [Dirtywave](https://dirtywave.com/); `m8c` is by
 
 ## 📚 Docs
 
-> 🚧 **Placeholder - coming soon.**
-
-Setup and troubleshooting guides (installing on muOS, controls, audio, etc.) will live in
-[`docs/`](docs). For now it holds the legacy build notes.
+Setup and troubleshooting guides live in [`docs/`](docs) - start with
+[`install.md`](docs/install.md) for where to put each file on muOS/Knulli, controls, and
+common fixes.
 
 ## 🧰 3D Prints
 

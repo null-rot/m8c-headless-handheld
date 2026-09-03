@@ -1,0 +1,89 @@
+# Builds m8c + kernel modules for the H700 handhelds in the cloud, using the
+# exact same Dockerfile/build_script pipeline as the local `./build.sh`.
+#
+# Manual only - builds are infrequent, no point burning Actions minutes on
+# every push. Every run uploads a staging Artifact so the build can be tested
+# on-device first; only set `publish_release: true` once it's confirmed good,
+# which additionally cuts a GitHub Release with the same files attached.
+#
+# Pinned to v1.7.10 by default - that's the last version confirmed working on
+# device (SDL2). Newer laamaa/m8c releases moved to SDL3, which doesn't run on
+# this hardware without extra work - see docs/sdl3-westonpack-notes.md.
+#
+# Once that's sorted, flip `default: '1.7.10'` below to `default: ''` and
+# build.sh's own resolve_m8c_version() will pick up the latest release
+# automatically - no other changes needed here.
+
+name: Build m8c
+
+on:
+  workflow_dispatch:
+    inputs:
+      m8c_version:
+        description: "m8c version to build (e.g. 1.7.10, no 'v' prefix). Leave blank for the latest laamaa/m8c release."
+        required: false
+        default: '1.7.10'
+      publish_release:
+        description: 'Also publish a GitHub Release with these files (only after testing the staged artifact on-device).'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-m8c-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve version
+        run: |
+          VERSION="${{ github.event.inputs.m8c_version || '1.7.10' }}"
+          echo "M8C_VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "Building m8c v$VERSION (or latest, if blank)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Build m8c (Knulli + muOS packages)
+        run: ./build.sh
+
+      - name: Summarize output
+        if: always()
+        run: |
+          {
+            echo "### Output tree"
+            echo '```'
+            find output -type f | sort
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Package per-platform zips
+        run: |
+          cd output
+          zip -r "../m8c-knulli-v${M8C_VERSION}.zip" knulli
+          zip -r "../m8c-muos-v${M8C_VERSION}.zip" muos
+
+      - name: Upload staging artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: m8c-v${{ env.M8C_VERSION }}-${{ github.run_number }}
+          path: |
+            m8c-knulli-v${{ env.M8C_VERSION }}.zip
+            m8c-muos-v${{ env.M8C_VERSION }}.zip
+          if-no-files-found: error
+
+      - name: Publish release
+        if: github.event.inputs.publish_release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="m8c-v${M8C_VERSION}-run${{ github.run_number }}"
+          gh release create "$TAG" \
+            "m8c-knulli-v${M8C_VERSION}.zip" \
+            "m8c-muos-v${M8C_VERSION}.zip" \
+            --title "m8c v${M8C_VERSION} (build #${{ github.run_number }})" \
+            --notes "Built from commit ${{ github.sha }} by [this workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}). Install instructions: [docs/install.md](${{ github.server_url }}/${{ github.repository }}/blob/main/docs/install.md)."
