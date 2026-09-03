@@ -2,15 +2,19 @@
 
 Where to put each file for muOS and Knulli, and how the controls work on each. Both
 platforms use the same two pieces - an `m8c.sh` launcher and an `m8c/` folder holding the
-binary, kernel modules, and (on muOS) its config - just dropped in different folders.
+binary, kernel modules, and (on muOS) its config - but where those pieces go differs.
 
 Get the files either from a [Release](../../../releases) (pre-built) or by building them
 yourself - see the main [README](../README.md#-build).
 
 ## muOS
 
-Copy **both** `m8c.sh` and the **`m8c`** folder into `ROMS/Ports/` on the card (keep them
-together), then do a Content Refresh (or reboot) and launch **m8c** from Ports.
+Unlike Knulli below, the launcher and its payload go in **two different places** (standard
+PortMaster layout):
+- `m8c.sh` → `ROMS/Ports/` (this is what muOS lists and launches from)
+- the **`m8c`** folder → the separate, top-level `Ports/` folder (**not** inside `ROMS/`)
+
+Then do a Content Refresh (or reboot) and launch **m8c** from Ports.
 
 ### Controls
 | M8 function | Button |

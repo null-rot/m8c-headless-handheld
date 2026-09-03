@@ -172,5 +172,5 @@ check_build_output() {
 check_build_output
 
 echo "Build and check process complete."
-echo "  Knulli package: /build/compiled/knulli/  (m8c.sh + m8c/ -> roms/ports)"
-echo "  muOS package:   /build/compiled/muos/    (m8c.sh + m8c/ -> ROMS/Ports)"
+echo "  Knulli package: /build/compiled/knulli/  (m8c.sh + m8c/ -> roms/ports, together)"
+echo "  muOS package:   /build/compiled/muos/    (m8c.sh -> ROMS/Ports, m8c/ -> top-level Ports/)"

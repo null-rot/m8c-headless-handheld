@@ -3,8 +3,11 @@
 A ready-to-run m8c port for muOS on Allwinner H700 handhelds (RG35XX* / RG40XX*).
 
 ## Install
-Copy **both** `m8c.sh` and the **`m8c`** folder into `ROMS/Ports/` on the card
-(keep them together), then do a Content Refresh (or reboot) and launch **m8c** from Ports.
+Standard PortMaster layout - the launcher and its payload go in **two different places**:
+- `m8c.sh` → `ROMS/Ports/` (this is what muOS lists and launches from)
+- the **`m8c`** folder → the separate, top-level `Ports/` folder (**not** inside `ROMS/`)
+
+Then do a Content Refresh (or reboot) and launch **m8c** from Ports.
 
 ## Controls
 | M8 function | Button |

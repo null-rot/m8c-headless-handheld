@@ -97,4 +97,4 @@ run_container
 echo ""
 echo "Done. Packages are in ./output/:"
 echo "  output/knulli/  - copy m8c.sh + m8c/ into roms/ports (Knulli)"
-echo "  output/muos/    - copy m8c.sh + m8c/ into ROMS/Ports (muOS)"
+echo "  output/muos/    - copy m8c.sh into ROMS/Ports, and m8c/ into the top-level Ports/ folder (muOS)"
