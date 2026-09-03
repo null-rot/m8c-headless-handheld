@@ -226,12 +226,12 @@ body
 .shift1st .shift_button .bkg,
 .shift2nd .shift_button .second,
 .shift2nd .shift_button .bkg,
-.l1 .l1_button .bkg,
-.l1hold .l1_button .hold,
-.l1_1st .l1_button .first,
-.l1_1st .l1_button .bkg,
-.l1_2nd .l1_button .second,
-.l1_2nd .l1_button .bkg
+.select .select_button .bkg,
+.selecthold .select_button .hold,
+.select1st .select_button .first,
+.select1st .select_button .bkg,
+.select2nd .select_button .second,
+.select2nd .select_button .bkg
 {
 	opacity: 1;
 }
@@ -244,7 +244,7 @@ body
 .edithold .edit_button .placeholder,
 .playhold .play_button .placeholder,
 .shifthold .shift_button .placeholder,
-.l1hold .l1_button .placeholder
+.selecthold .select_button .placeholder
 {
 	opacity: 0;
 }

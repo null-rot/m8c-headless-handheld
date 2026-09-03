@@ -166,10 +166,10 @@ body {
 .unused .placeholder { fill: #EEE; }
 .unused-label { fill: #BBB; }
 
-/* L1 shoulder token (used by the Quit combo) */
-.l1 .l1_button .bkg,
-.l1hold .l1_button .hold { opacity: 1; }
-.l1hold .l1_button .placeholder { opacity: 0; }
+/* SELECT token (used by the Quit combo) */
+.select .select_button .bkg,
+.selecthold .select_button .hold { opacity: 1; }
+.selecthold .select_button .placeholder { opacity: 0; }
 
 /* Double-tap "x2" badge shown next to the button being double-tapped */
 .edit.double .edit_button .double_tap,

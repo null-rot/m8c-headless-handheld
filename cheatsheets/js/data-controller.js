@@ -149,7 +149,7 @@ const data = [
       },
       {
         name: "SHIFT",
-        secondary: "= SELECT (or L2)",
+        secondary: "= R1",
         description: "Shift / Alt",
         command: "shift",
       },
@@ -167,8 +167,8 @@ const data = [
       {
         name: "Quit m8c",
         secondary: "exit to muOS",
-        description: "hold SELECT + L1",
-        command: "shifthold l1",
+        description: "hold R1 + SELECT",
+        command: "shifthold select",
       },
       {
         name: "Selection Mode Only",

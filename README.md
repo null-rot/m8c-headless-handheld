@@ -44,7 +44,7 @@ while the wording keeps the M8's own names (so they still match the Dirtywave ma
 Pick which button each M8 function sits on, watch a live preview, then Print / Save PDF.
 Choose single-page or fold booklet, US Letter or A4, and your device's button legend.
 
-Or print a ready-made copy (stock mapping):
+Or print a ready-made copy (this build's mapping: SHIFT=R1, quit=hold R1+SELECT):
 - [Single-page card](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/shortcuts-controller.html) (firmware 6.5+, landscape)
 - [Pocket fold booklet](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/controller.html)
 - [EFX & synthesis reference](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/efx.html)

@@ -6,9 +6,9 @@
    The pad graphic in controller.html renders those functions as the physical
    handheld buttons they are mapped to in m8c:
 
-     SHIFT  = SELECT (or L2)      EDIT = A
+     SHIFT  = R1                  EDIT = A
      PLAY   = START               OPTION = B
-     Up/Down/Left/Right = D-pad   Quit m8c = SELECT + L1
+     Up/Down/Left/Right = D-pad   Quit m8c = R1 + SELECT
 */
 
 var pages = [
@@ -83,7 +83,7 @@ var pages = [
 // Mapping banner rendered once at the top of the first page.
 var legend_html =
 	"<div class='legend'>"
-	+ "<div class='maprow'><b>SHIFT</b>=SELECT (or L2) &middot; <b>PLAY</b>=START &middot; <b>EDIT</b>=A &middot; <b>OPTION</b>=B &middot; <b>D-pad</b>=Up/Down/Left/Right &middot; <b>Quit</b>=SELECT+L1 &middot; <span class='note'>icons=your buttons, words=M8 names</span></div>"
+	+ "<div class='maprow'><b>SHIFT</b>=R1 &middot; <b>PLAY</b>=START &middot; <b>EDIT</b>=A &middot; <b>OPTION</b>=B &middot; <b>D-pad</b>=Up/Down/Left/Right &middot; <b>Quit</b>=R1+SELECT &middot; <span class='note'>icons=your buttons, words=M8 names</span></div>"
 	+ "</div>";
 
 $( document ).ready(function() {

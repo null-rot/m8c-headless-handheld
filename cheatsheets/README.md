@@ -19,10 +19,11 @@ Options:
 - **Paper size** - US Letter or A4
 - Your setup is saved in the URL + `localStorage`, so a shared link reopens it
 
-## Pre-made cards (stock mapping)
+## Pre-made cards (this build's mapping)
 
-Ready-to-print copies using the stock m8c mapping (SHIFT=SELECT, PLAY=START, EDIT=A,
-OPTION=B, quit=SELECT+L1):
+Ready-to-print copies using this repo's mapping (SHIFT=R1, PLAY=START, EDIT=A, OPTION=B,
+quit=hold R1+SELECT) - see [`docs/install.md`](../docs/install.md) for the muOS config.ini
+these match. If your controls differ, use the generator above instead.
 
 - [Single-page card](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/shortcuts-controller.html) (M8 firmware 6.5+, landscape)
 - [Pocket fold booklet](https://null-rot.github.io/m8c-headless-handheld/cheatsheets/controller.html)
