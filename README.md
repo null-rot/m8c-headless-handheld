@@ -70,9 +70,11 @@ Setup and troubleshooting guides (installing on muOS, controls, audio, etc.) wil
 
 ## 🧰 3D Prints
 
-> 🚧 **Placeholder - coming soon.**
+<p align="center">
+  <img src="3d-prints/images/teensy1.jpg" alt="Teensy 4.1 case fitted to the handheld" width="480">
+</p>
 
-STLs and print notes for the Teensy 4.1 case and device mounts will live in
+STLs and print notes for the Teensy 4.1 case and device mounts live in
 [`3d-prints/`](3d-prints).
 
 ---

@@ -1,5 +1,9 @@
 # 🧰 3D Prints
 
+<p align="center">
+  <img src="images/teensy1.jpg" alt="Teensy 4.1 case fitted to the handheld" width="480">
+</p>
+
 STLs and print notes for enclosures and mounts used with this project's headless M8 build.
 
 ## Available now
