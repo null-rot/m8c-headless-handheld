@@ -6,6 +6,7 @@ Setup and troubleshooting guides for running `m8c` on handhelds.
 
 - [`install.md`](install.md) - where to put each file for muOS and Knulli, controls, and
   common fixes (permissions, audio).
+- [`build.md`](build.md) - compiling `m8c` from source, locally or via GitHub Actions.
 - [`sdl3-westonpack-notes.md`](sdl3-westonpack-notes.md) - WIP investigation into running
   the newer SDL3 `m8c` releases on-device.
 

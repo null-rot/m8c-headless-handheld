@@ -5,7 +5,7 @@ platforms use the same two pieces - an `m8c.sh` launcher and an `m8c/` folder ho
 binary, kernel modules, and (on muOS) its config - but where those pieces go differs.
 
 Get the files either from a [Release](../../../releases) (pre-built) or by building them
-yourself - see the main [README](../README.md#-build).
+yourself - see [docs/build.md](build.md).
 
 ## muOS
 
