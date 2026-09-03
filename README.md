@@ -16,7 +16,7 @@ The links below will take you to the relevant resources. Note that some are WIP 
 | [🔨 Build](#-build) | Compile `m8c` + the kernel modules for the handheld |
 | [🎛️ Cheat sheets](#️-cheat-sheets) | Personalised, printable M8 shortcut cards (+ a web generator) |
 | [📚 Docs](#-docs) | Setup & troubleshooting guides |
-| [🧰 3D Prints](#-TBC) | Teensy4.1 case & device mounts |
+| [🧰 3D Prints](#-3d-prints) | Teensy4.1 case & device mounts |
 
 ---
 
@@ -26,10 +26,9 @@ The links below will take you to the relevant resources. Note that some are WIP 
 
 The current Docker-based build (Linux kernel modules + `m8c` for the Allwinner H700) lives at
 the repo root: `build.sh`, `Dockerfile.arm64`, `Dockerfile.x86_64`, `build_script.*.sh`.
-The original build instructions are preserved in
-[`docs/legacy-docker-build.md`](docs/legacy-docker-build.md).
 
-The build is based on **[jamesMcMeex/m8c-rg35xx-knulli](https://github.com/jamesMcMeex/m8c-rg35xx-knulli)**.
+The build is based on **[jamesMcMeex/m8c-rg35xx-knulli](https://github.com/jamesMcMeex/m8c-rg35xx-knulli)**,
+see their repo for the original Docker build instructions.
 
 The aim here is to take the good work jamesMcMeex has done with his docker compile and move it into something anyone can do without any local setup. The current handheld port is fixed to version 1.7 - this is due to newer versions of the M8C migrating to a new SD3 engine. 
 There is a test build i have partly working on the H700 devices.
@@ -68,6 +67,13 @@ The M8 tracker is a product of [Dirtywave](https://dirtywave.com/); `m8c` is by
 
 Setup and troubleshooting guides (installing on muOS, controls, audio, etc.) will live in
 [`docs/`](docs). For now it holds the legacy build notes.
+
+## 🧰 3D Prints
+
+> 🚧 **Placeholder - coming soon.**
+
+STLs and print notes for the Teensy 4.1 case and device mounts will live in
+[`3d-prints/`](3d-prints).
 
 ---
 
