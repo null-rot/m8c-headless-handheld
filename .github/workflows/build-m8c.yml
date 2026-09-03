@@ -28,6 +28,18 @@ on:
         type: boolean
         required: false
         default: false
+      muos_tested_version:
+        description: 'muOS version this build was confirmed working on (release notes only).'
+        required: false
+        default: '2601.1_FUNKY_JACARANDA'
+      muos_tested_device:
+        description: 'Device this build was confirmed working on (release notes only).'
+        required: false
+        default: 'Anbernic RG40XX-V'
+      knulli_status:
+        description: 'Knulli status line for the release notes - update once someone has tested a build on real Knulli hardware.'
+        required: false
+        default: "not tested yet on real hardware - builds and passes the packaging checks, but hasn't been verified on-device"
 
 permissions:
   contents: write
@@ -80,10 +92,26 @@ jobs:
         if: github.event.inputs.publish_release == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          MUOS_VERSION: ${{ github.event.inputs.muos_tested_version }}
+          MUOS_DEVICE: ${{ github.event.inputs.muos_tested_device }}
+          KNULLI_STATUS: ${{ github.event.inputs.knulli_status }}
         run: |
           TAG="m8c-v${M8C_VERSION}-run${{ github.run_number }}"
+          REPO_URL="${{ github.server_url }}/${{ github.repository }}"
+          RUN_URL="$REPO_URL/actions/runs/${{ github.run_id }}"
+          INSTALL_URL="$REPO_URL/blob/main/docs/install.md"
+
+          sed \
+            -e "s|__M8C_VERSION__|${M8C_VERSION}|g" \
+            -e "s|__RUN_URL__|${RUN_URL}|g" \
+            -e "s|__INSTALL_URL__|${INSTALL_URL}|g" \
+            -e "s|__MUOS_VERSION__|${MUOS_VERSION}|g" \
+            -e "s|__MUOS_DEVICE__|${MUOS_DEVICE}|g" \
+            -e "s|__KNULLI_STATUS__|${KNULLI_STATUS}|g" \
+            .github/release-notes-template.md > RELEASE_NOTES.md
+
           gh release create "$TAG" \
             "m8c-knulli-v${M8C_VERSION}.zip" \
             "m8c-muos-v${M8C_VERSION}.zip" \
             --title "m8c v${M8C_VERSION} (build #${{ github.run_number }})" \
-            --notes "Built from commit ${{ github.sha }} by [this workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}). Install instructions: [docs/install.md](${{ github.server_url }}/${{ github.repository }}/blob/main/docs/install.md)."
+            --notes-file RELEASE_NOTES.md
