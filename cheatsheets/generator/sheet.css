@@ -71,13 +71,25 @@
 
 /* "Text only" row style: no per-row gamepad diagram, larger type in its place -
  * legible when the sheet is printed reduced (e.g. Letter content on A4 paper). */
-.sheet.rowstyle-text .action_text { margin-left: 0; line-height: 4.4mm; }
+.sheet.rowstyle-text .action_text { margin-left: 0; line-height: 3.9mm; }
 .sheet.rowstyle-text .action { padding: 0.3mm 1.4mm; margin-bottom: 0.4mm; }
-.sheet.rowstyle-text .action .name { font-size: 2.6em; }
-.sheet.rowstyle-text .action .secondary { font-size: 2.2em; }
-.sheet.rowstyle-text .action .description { font-size: 2.2em; }
-.sheet.rowstyle-text .action .extra { font-size: 1.9em; }
-.sheet.rowstyle-text .legend-section .section_header { font-size: 2.6em; }
+.sheet.rowstyle-text .action .name { font-size: 2.2em; }
+.sheet.rowstyle-text .action .secondary { font-size: 1.9em; }
+.sheet.rowstyle-text .action .description { font-size: 1.9em; }
+.sheet.rowstyle-text .action .extra { font-size: 1.6em; }
+.sheet.rowstyle-text .legend-section .section_header { font-size: 2.4em; }
+
+/* Coloured button-icon badges, substituted inline for button names in the text
+ * (Anbernic face-button colours; d-pad grey; shoulders/select/start black). */
+.sheet .btn-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: "SofiaSans", sans-serif; font-weight: 800;
+  line-height: 1; vertical-align: -0.25em; margin: 0 0.06em;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.sheet .btn-badge.circle { width: 1.3em; height: 1.3em; border-radius: 50%; font-size: 0.85em; }
+.sheet .btn-badge.dpad { width: 1.2em; height: 1.2em; border-radius: 0.3em; font-size: 0.72em; }
+.sheet .btn-badge.pill { min-width: 1.4em; height: 1.25em; padding: 0 0.22em; border-radius: 0.35em; font-size: 0.78em; }
 
 /* legend ("Your Controls") */
 .sheet .legend-section { border: none; }

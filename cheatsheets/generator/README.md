@@ -10,8 +10,9 @@ works for any controller.
 Options: button mapping (any function on any button), device legend (Nintendo / Xbox /
 PlayStation), row style (gamepad icon + text, or text-only for larger/easier-to-read type -
 handy once the sheet is printed reduced, e.g. Letter content on A4 paper), show device names /
-M8 names / both on the icons, show M8 function names or your mapped button names in the text,
-single-page or fold booklet, US Letter or A4.
+M8 names / both on the icons, show M8 function names or your mapped button names in the text
+(in text-only mode, optionally as coloured Anbernic-style button icons instead of plain
+letters), single-page or fold booklet, US Letter or A4.
 Your setup is saved in the URL + `localStorage`, so a shared link reopens it.
 
 ## How it works
