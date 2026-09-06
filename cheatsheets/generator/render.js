@@ -3,6 +3,19 @@
 
 function ctrlLabel(id, legend) { return deviceLabel(id, legend || "nintendo"); }
 
+// Swap the M8 function names (EDIT/OPTION/SHIFT/PLAY/QUIT) inside a line of text
+// for whichever physical button the user mapped them to, e.g. "hold SHIFT + EDIT"
+// -> "hold SELECT + A". Only used when cfg.textNames === 'device'.
+const FUNCTION_TEXT_MAP = { EDIT: "edit", OPTION: "option", SHIFT: "shift", PLAY: "play", QUIT: "quit" };
+function withMappedNames(text, cfg) {
+  if (!text || cfg.textNames !== "device") return text || "";
+  return text.replace(/\b(EDIT|OPTION|SHIFT|PLAY|QUIT)\b/g, function (word) {
+    const fn = FUNCTION_TEXT_MAP[word];
+    const id = cfg[fn];
+    return id ? ctrlLabel(id, cfg.legend).toUpperCase() : word;
+  });
+}
+
 // Build the "Your Controls" legend section from the current bindings.
 function buildLegend(cfg) {
   const L = (id) => ctrlLabel(id, cfg.legend);
@@ -26,20 +39,23 @@ function makeAction(action, cfg) {
   const row = document.createElement("div");
   row.className = "action" + (action.selection ? " selection-mode" : "");
 
-  const btns = document.createElement("div");
-  btns.className = "action_buttons";
-  btns.innerHTML = padSvg(action.command || "");
-  applyPadConfig(btns.firstElementChild, cfg);
+  if (cfg.rowStyle !== "text") {
+    const btns = document.createElement("div");
+    btns.className = "action_buttons";
+    btns.innerHTML = padSvg(action.command || "");
+    applyPadConfig(btns.firstElementChild, cfg);
+    row.appendChild(btns);
+  }
 
   const txt = document.createElement("div");
   txt.className = "action_text";
   const name = document.createElement("span"); name.className = "name"; name.textContent = action.name || "";
-  const sec = document.createElement("span"); sec.className = "secondary"; sec.textContent = action.secondary ? " " + action.secondary : "";
-  const desc = document.createElement("span"); desc.className = "description"; desc.textContent = action.description || "";
-  const extra = document.createElement("span"); extra.className = "extra"; extra.textContent = action.extra || "";
+  const sec = document.createElement("span"); sec.className = "secondary"; sec.textContent = action.secondary ? " " + withMappedNames(action.secondary, cfg) : "";
+  const desc = document.createElement("span"); desc.className = "description"; desc.textContent = withMappedNames(action.description, cfg);
+  const extra = document.createElement("span"); extra.className = "extra"; extra.textContent = withMappedNames(action.extra, cfg);
   txt.append(name, sec, desc, extra);
 
-  row.append(btns, txt);
+  row.appendChild(txt);
   return row;
 }
 
@@ -120,6 +136,7 @@ function renderFold(root, cfg) {
 function renderInto(root, cfg) {
   root.classList.remove("paper-letter", "paper-a4");
   root.classList.add(cfg.paper === "a4" ? "paper-a4" : "paper-letter");
+  root.classList.toggle("rowstyle-text", cfg.rowStyle === "text");
   if (cfg.format === "fold") {
     root.classList.add("fold");
     renderFold(root, cfg);

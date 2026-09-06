@@ -69,6 +69,16 @@
 .sheet .buttons { width: 13mm; height: 7.2mm; flex-shrink: 0; }
 .sheet .action_buttons { display: flex; align-items: center; justify-content: center; }
 
+/* "Text only" row style: no per-row gamepad diagram, larger type in its place -
+ * legible when the sheet is printed reduced (e.g. Letter content on A4 paper). */
+.sheet.rowstyle-text .action_text { margin-left: 0; line-height: 4.4mm; }
+.sheet.rowstyle-text .action { padding: 0.3mm 1.4mm; margin-bottom: 0.4mm; }
+.sheet.rowstyle-text .action .name { font-size: 2.6em; }
+.sheet.rowstyle-text .action .secondary { font-size: 2.2em; }
+.sheet.rowstyle-text .action .description { font-size: 2.2em; }
+.sheet.rowstyle-text .action .extra { font-size: 1.9em; }
+.sheet.rowstyle-text .legend-section .section_header { font-size: 2.6em; }
+
 /* legend ("Your Controls") */
 .sheet .legend-section { border: none; }
 .sheet .legend-section .section_header {
