@@ -84,7 +84,28 @@
 @media print {
   @page letterport { size: letter portrait; margin: 0.25in; }
   @page a4port { size: A4 portrait; margin: 0.25in; }
-  .sheet.fold { width: auto; height: auto; padding: 0; transform: none !important; }
+
+  /* The @page margin above only applies when the print dialog's own margin
+   * setting is left at "Default" - picking "None" (common for saving a
+   * full-bleed PDF) or a custom value overrides it, and any *fixed* mm size
+   * baked into the layout (the --fold-page-w/h vars used for the on-screen
+   * preview) would then be wrong for the printable area actually granted,
+   * leaving a gap around the content instead of reaching the paper's edges.
+   * So at print time the whole grid is sized in percentages of the page box
+   * instead, filling whatever printable area results either way - same
+   * approach the single-page layout already uses. */
+  .sheet.fold { width: 100%; height: 100vh; padding: 0; transform: none !important; }
+  .sheet.fold .guide {
+    display: grid;
+    grid-template-columns: 7mm 1fr 7mm;
+    grid-template-rows: 7mm 1fr 7mm;
+    width: 100%; height: 100%;
+  }
+  .sheet.fold .row { display: contents; }
+  .sheet.fold .row > div { display: block; }
+  .sheet.fold .spread { width: 100%; height: 50%; }
+  .sheet.fold .page { width: 50%; height: 100%; }
+
   .sheet.fold.paper-letter { page: letterport; }
   .sheet.fold.paper-a4 { page: a4port; }
 }
