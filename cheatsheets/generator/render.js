@@ -16,6 +16,71 @@ function withMappedNames(text, cfg) {
   });
 }
 
+// Coloured button-icon badges (Anbernic face-button colours), used instead of
+// plain text when cfg.textNames === 'device' && cfg.buttonIcons === 'on'.
+const BADGE_FACE_COLORS = { a: "#dd3b32", b: "#e0a800", x: "#2f7fd1", y: "#3a9e50" };
+const BADGE_DPAD_ARROW = { up: "▲", down: "▼", left: "◀", right: "▶" };
+const BADGE_PILL_LABELS = { select: "Sel", start: "St" };
+const WORD_TO_CONTROL = {
+  EDIT: (cfg) => cfg.edit,
+  OPTION: (cfg) => cfg.option,
+  SHIFT: (cfg) => cfg.shift,
+  PLAY: (cfg) => cfg.play,
+  QUIT: (cfg) => cfg.quit,
+  UP: () => "up",
+  DOWN: () => "down",
+  LEFT: () => "left",
+  RIGHT: () => "right",
+};
+
+function controlBadge(id, cfg) {
+  const span = document.createElement("span");
+  if (BADGE_FACE_COLORS[id]) {
+    span.className = "btn-badge circle";
+    span.style.background = BADGE_FACE_COLORS[id];
+    span.style.color = "#fff";
+    span.textContent = ctrlLabel(id, cfg.legend).toUpperCase();
+  } else if (BADGE_DPAD_ARROW[id]) {
+    span.className = "btn-badge dpad";
+    span.style.background = "#888f97";
+    span.style.color = "#fff";
+    span.textContent = BADGE_DPAD_ARROW[id];
+  } else {
+    span.className = "btn-badge pill";
+    span.style.background = "#1a1a1a";
+    span.style.color = "#fff";
+    span.textContent = BADGE_PILL_LABELS[id] || ctrlLabel(id, cfg.legend).toUpperCase();
+  }
+  return span;
+}
+
+// Turns a line of text into a mix of text nodes and <span class="btn-badge">
+// icons wherever an M8 function name or a d-pad direction word appears.
+function textWithButtonIcons(text, cfg) {
+  const frag = document.createDocumentFragment();
+  const re = /\b(EDIT|OPTION|SHIFT|PLAY|QUIT|UP|DOWN|LEFT|RIGHT)\b/g;
+  let last = 0, m;
+  while ((m = re.exec(text))) {
+    if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+    const id = WORD_TO_CONTROL[m[1]](cfg);
+    frag.appendChild(id ? controlBadge(id, cfg) : document.createTextNode(m[1]));
+    last = re.lastIndex;
+  }
+  if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+  return frag;
+}
+
+// Appends `text` into `el`, either as plain (optionally name-mapped) text or,
+// when the button-icon option is on, as a mix of text + coloured badges.
+function appendMappedText(el, text, cfg) {
+  if (!text) return;
+  if (cfg.textNames === "device" && cfg.buttonIcons === "on") {
+    el.appendChild(textWithButtonIcons(text, cfg));
+  } else {
+    el.appendChild(document.createTextNode(withMappedNames(text, cfg)));
+  }
+}
+
 // Build the "Your Controls" legend section from the current bindings.
 function buildLegend(cfg) {
   const L = (id) => ctrlLabel(id, cfg.legend);
@@ -50,9 +115,10 @@ function makeAction(action, cfg) {
   const txt = document.createElement("div");
   txt.className = "action_text";
   const name = document.createElement("span"); name.className = "name"; name.textContent = action.name || "";
-  const sec = document.createElement("span"); sec.className = "secondary"; sec.textContent = action.secondary ? " " + withMappedNames(action.secondary, cfg) : "";
-  const desc = document.createElement("span"); desc.className = "description"; desc.textContent = withMappedNames(action.description, cfg);
-  const extra = document.createElement("span"); extra.className = "extra"; extra.textContent = withMappedNames(action.extra, cfg);
+  const sec = document.createElement("span"); sec.className = "secondary";
+  if (action.secondary) { sec.appendChild(document.createTextNode(" ")); appendMappedText(sec, action.secondary, cfg); }
+  const desc = document.createElement("span"); desc.className = "description"; appendMappedText(desc, action.description, cfg);
+  const extra = document.createElement("span"); extra.className = "extra"; appendMappedText(extra, action.extra, cfg);
   txt.append(name, sec, desc, extra);
 
   row.appendChild(txt);

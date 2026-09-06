@@ -93,6 +93,13 @@
             <option value="device">Your button names (A, B …)</option>
           </select>
         </div>
+        <div class="field" id="field-buttonicons">
+          <label>Button style in text <span class="hint">(Anbernic colours)</span></label>
+          <select id="sel-buttonicons">
+            <option value="off">Plain text (A, SELECT, START …)</option>
+            <option value="on">Coloured button icons</option>
+          </select>
+        </div>
       </fieldset>
 
       <div class="actions">
@@ -112,9 +119,9 @@
   </div>
 
   <script>
-    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device", format: "single", paper: "letter", rowStyle: "icons", textNames: "m8" };
+    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device", format: "single", paper: "letter", rowStyle: "icons", textNames: "m8", buttonIcons: "off" };
     var FUNCTIONS = ["edit", "option", "shift", "play", "quit"];
-    var EXTRAS = ["legend", "labelMode", "format", "paper", "rowStyle", "textNames"];
+    var EXTRAS = ["legend", "labelMode", "format", "paper", "rowStyle", "textNames", "buttonIcons"];
     var config = Object.assign({}, DEFAULTS);
 
     // options for the function selects = every physical control (not the d-pad),
@@ -173,6 +180,7 @@
       document.getElementById("sel-paper").value = config.paper;
       document.getElementById("sel-rowstyle").value = config.rowStyle;
       document.getElementById("sel-textnames").value = config.textNames;
+      document.getElementById("sel-buttonicons").value = config.buttonIcons;
       toggleFieldsVisibility();
     }
 
@@ -180,6 +188,8 @@
       var isText = config.rowStyle === "text";
       document.getElementById("field-textnames").style.display = isText ? "" : "none";
       document.getElementById("field-labelmode").style.display = isText ? "none" : "";
+      var showIcons = isText && config.textNames === "device";
+      document.getElementById("field-buttonicons").style.display = showIcons ? "" : "none";
     }
 
     function persist() {
@@ -263,6 +273,11 @@
       });
       document.getElementById("sel-textnames").addEventListener("change", function (e) {
         config.textNames = e.target.value;
+        toggleFieldsVisibility();
+        update();
+      });
+      document.getElementById("sel-buttonicons").addEventListener("change", function (e) {
+        config.buttonIcons = e.target.value;
         update();
       });
 
