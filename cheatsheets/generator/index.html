@@ -72,11 +72,25 @@
           <select id="sel-legend"></select>
         </div>
         <div class="field">
+          <label>Row style</label>
+          <select id="sel-rowstyle">
+            <option value="icons">Gamepad icon + text</option>
+            <option value="text">Text only <span class="hint">(no gamepad diagrams, larger &amp; easier to read)</span></option>
+          </select>
+        </div>
+        <div class="field" id="field-labelmode">
           <label>Show on buttons</label>
           <select id="sel-labelmode">
             <option value="device">Device names (A, B, L1 …)</option>
             <option value="m8">M8 names (EDIT, OPT …)</option>
             <option value="both">Both</option>
+          </select>
+        </div>
+        <div class="field" id="field-textnames">
+          <label>In text, show</label>
+          <select id="sel-textnames">
+            <option value="m8">M8 function names (EDIT, OPTION …)</option>
+            <option value="device">Your button names (A, B …)</option>
           </select>
         </div>
       </fieldset>
@@ -98,9 +112,9 @@
   </div>
 
   <script>
-    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device", format: "single", paper: "letter" };
+    var DEFAULTS = { edit: "a", option: "b", shift: "select", play: "start", quit: "l1", legend: "nintendo", labelMode: "device", format: "single", paper: "letter", rowStyle: "icons", textNames: "m8" };
     var FUNCTIONS = ["edit", "option", "shift", "play", "quit"];
-    var EXTRAS = ["legend", "labelMode", "format", "paper"];
+    var EXTRAS = ["legend", "labelMode", "format", "paper", "rowStyle", "textNames"];
     var config = Object.assign({}, DEFAULTS);
 
     // options for the function selects = every physical control (not the d-pad),
@@ -157,6 +171,15 @@
       document.getElementById("sel-labelmode").value = config.labelMode;
       document.getElementById("sel-format").value = config.format;
       document.getElementById("sel-paper").value = config.paper;
+      document.getElementById("sel-rowstyle").value = config.rowStyle;
+      document.getElementById("sel-textnames").value = config.textNames;
+      toggleFieldsVisibility();
+    }
+
+    function toggleFieldsVisibility() {
+      var isText = config.rowStyle === "text";
+      document.getElementById("field-textnames").style.display = isText ? "" : "none";
+      document.getElementById("field-labelmode").style.display = isText ? "none" : "";
     }
 
     function persist() {
@@ -231,6 +254,15 @@
       });
       document.getElementById("sel-paper").addEventListener("change", function (e) {
         config.paper = e.target.value;
+        update();
+      });
+      document.getElementById("sel-rowstyle").addEventListener("change", function (e) {
+        config.rowStyle = e.target.value;
+        toggleFieldsVisibility();
+        update();
+      });
+      document.getElementById("sel-textnames").addEventListener("change", function (e) {
+        config.textNames = e.target.value;
         update();
       });
 

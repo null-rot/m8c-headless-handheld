@@ -41,6 +41,13 @@
 .sheet.fold .action { padding: 0.05mm 0.5mm; }
 .sheet.fold .action_text { margin-left: 1.8mm; }
 
+/* "Text only" row style: no per-page gamepad diagrams, slightly larger type. */
+.sheet.fold.rowstyle-text .action_text { margin-left: 0; line-height: 1.3; }
+.sheet.fold.rowstyle-text .action .name { font-size: 2.3em; }
+.sheet.fold.rowstyle-text .action .secondary { font-size: 1.9em; }
+.sheet.fold.rowstyle-text .action .description { font-size: 1.9em; }
+.sheet.fold.rowstyle-text .action .extra { font-size: 1.6em; }
+
 /* mapping banner at the top of the first page */
 .sheet.fold .legend {
   font-family: "SofiaSansCond", "Arial Narrow", sans-serif;
