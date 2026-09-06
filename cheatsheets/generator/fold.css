@@ -16,15 +16,25 @@
 .sheet.fold .row { display: table-row; }
 .sheet.fold .row > div { display: table-cell; }
 
+/* Each mini-page fills a quarter of the printable area (paper size minus the
+ * @page print margin below, minus the cut/fold mark gutters), so the four
+ * corner marks land on the actual paper corners and there's no dead margin
+ * left to trim away. Defaults (90x118mm) are a fallback; paper-size classes
+ * below set the real size for Letter/A4. */
 .sheet.fold .page {
-  width: 90mm;
-  height: 118mm;
+  width: var(--fold-page-w, 90mm);
+  height: var(--fold-page-h, 118mm);
   padding: 3mm 3mm 3mm 5mm;
   padding-top: 4mm;
   border: dotted 0.125mm #ddd;
 }
 .sheet.fold #recto > .page { transform: rotateZ(180deg); }
-.sheet.fold .spread { display: flex; width: 180mm; }
+.sheet.fold .spread { display: flex; width: calc(var(--fold-page-w, 90mm) * 2); }
+
+/* Printable area is (paper - 2 * 0.25in @page margin); each mini-page is
+ * half that, minus the 7mm cut/fold mark gutter on each side. */
+.sheet.fold.paper-letter { --fold-page-w: 94.6mm; --fold-page-h: 126.35mm; }
+.sheet.fold.paper-a4     { --fold-page-w: 91.65mm; --fold-page-h: 135.15mm; }
 
 .sheet.fold .section {
   font-family: "SofiaSans", sans-serif;

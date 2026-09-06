@@ -29,7 +29,13 @@ button.primary:hover { background: #1d4ed8; }
 
 .preview-hint { font-size: 12px; color: #888; margin: 0 0 8px; }
 .preview-scale { transform-origin: top left; }
-.sheet { box-shadow: 0 1px 10px rgba(0,0,0,.16); }
+/* screen-only affordance - scoped so it can never leak into the printed/PDF
+ * output (it loads after sheet.css's print reset, so an unscoped rule here
+ * would win the cascade during print and add just enough bleed to push a
+ * single-page sheet onto a second, mostly-blank page). */
+@media screen {
+  .sheet { box-shadow: 0 1px 10px rgba(0,0,0,.16); }
+}
 
 @media print {
   header, .app-controls, .preview-hint { display: none !important; }
